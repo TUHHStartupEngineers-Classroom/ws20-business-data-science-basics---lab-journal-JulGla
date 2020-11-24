@@ -1,0 +1,301 @@
+---
+title: "Dictionary"
+author: "Joschka Schwarz"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: true
+    toc_depth: 3
+    code_folding: show
+---
+
+<style>
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #2DC6D6;
+}
+</style>
+
+# Helpful code chunks
+## General bits
+
+1. `?function_name`
+This function provides information about how particular pieces of syntax work. 
+
+```{r, eval=FALSE}
+?list.files
+```
+
+2. `list.files()`
+This function lists all the names of each file in a given R project.
+```{r}
+list.files()
+```
+
+...
+
+***
+
+## Input and output
+1. `saveRDS()`
+This saves an R object to a file.
+```{r}
+x <- 1
+saveRDS("x", file = "testfile.rds")
+```
+
+
+2. `readRDS()`
+This loads saved data.
+```{r}
+x <- readRDS(file = "testfile.rds")
+```
+
+...
+
+***
+
+## Data Creation
+1. `c()`
+This function is used to combine elements (factors in a vectore for example)
+```{r}
+numbers <- c(1,2,3,4,5)
+numbers <- c(1:5)
+print(numbers)
+```
+
+
+2. `seq()`
+Generates a sequence of numbers. The first two values are the starting and (maximal) end values of the sequence. The third is the step width of the sequence.
+```{r}
+seq(1,10,2)
+```
+
+3. `rep()`
+This function replicates the first number the number of times that is designated in the second space
+```{r}
+rep(1,10)
+```
+
+
+4. `data.frame()`
+This allows one to enter specific groups of data values
+```{r}
+df <- data.frame(col_A = c(1, 2, 3, 5), col_B = c("A", "B", "C", "D"))
+df
+```
+
+5. ...
+
+## Slicing and extracting data indexing vectors
+
+* `x[n]` nth element
+* `x[-n]` all but nth element
+* `x[1:n]` first n elements
+* `x[-(1:n)]` elements from n+1 to the end
+* `x[c(1,4,2)]` specific elements
+* `x[“name”]` elements named “name”
+* `x[x>3]` all elements greater than 3
+* `x[x > 3 & x < 5]` all elements between 3 and 5
+* `x[x %in% c(“a”,“and”,“the”)]` all elements in given set
+
+## Indexing lists
+
+* `x[n]` list with elements n
+* `x[[n]]` nth element of the list
+* `x[[“name”]]` element of the list named “name”. Alternatively: `x$name`
+
+## Indexing matrices
+
+* x[i,j] element at row i, column j
+* x[i,] row i
+* x[,j] column j
+* x[,c(1,3)] columns 1 and 3
+* x[“name”,] row named “name”
+
+## Indexing data frames 
+
+Matrix indexing plus the following
+
+* x[[“name”]] column named “name”. Alternatively: `x$name`
+
+
+## Variable conversion
+
+as.data.frame(x)
+as.numeric(x)
+as.logical(x)
+as.character(x)
+
+## Variable information
+
+1. `is.na(x)`
+2. `is.null(x)`
+3. `is.data.frame(x)`
+4. `is.numeric(x)`
+5. `is.character(x)`
+6. `length(x)`
+7. `dim(x)`
+9. `nrow(x)`
+10. `ncol(x)`
+11. `class()`
+12. `attributes()`
+
+## Data selection and manipulation
+
+1. `which.max()`
+2. `which.min()`
+3. `which()`
+4. `sort()`
+5. `unique()`
+6. `table()`
+7. `sample()`
+
+## Math
+
+1. `max()`
+
+This sets the maximum value included in a data set.
+```{r}
+x <- c(1,2,3,4,5,10)
+max(x)
+```
+
+2. `min()`
+
+This set the minimum value included in a data set.
+```{r}
+x <- c(1,10,20,100)
+min(x)
+```
+
+
+3. `range()`
+
+This determines the range of numbers considered in a set.
+```{r}
+x <- c(1, 10, 20, 40, 100)
+range(x)
+```
+
+
+4. `sum()`
+
+This function adds all the numbers in a given set.
+```{r}
+x <- c(1, 10, 20, 40, 100)
+sum(x)
+
+```
+
+
+5. `mean()`
+
+Creates the mean of a given set of number values.
+```{r}
+x <- c(1, 10, 20, 40, 100)
+mean(x)
+```
+
+
+6. `median()`
+
+calculates the median of a set of numbers.
+```{r}
+x <- c(1, 10, 20, 40,  100)
+median(x)
+```
+
+
+7. `var()`
+
+This calculates the variance of a set of values.
+```{r}
+x <- c(1, 10, 20, 40, 100)
+var(x)
+```
+
+8. `sd()`
+
+This calculates the standard deviation of a set of values.
+```{r}
+x <- c(1, 10, 20, 40, 100)
+sd(x)
+```
+
+9. `cor()`
+
+This calculates the correlation between groups of data.
+```{r}
+x <- c(1, 10, 20, 40, 100)
+y <- c(50, 60, 100, 200, 300)
+cor(x,y)
+```
+
+10. `round()`
+
+This rounds a decimal to a specified number of decimals.
+```{r}
+round(5.4567,1)
+```
+
+11. `abs()`
+
+This takes the absolute value of a given number.
+```{r}
+abs(-20)
+```
+
+
+## Matrices
+
+* `t()`
+* `diag()`
+* `rowSums()`
+* `colSums()`
+* `rowMeans()`
+* `colMeans()`
+
+## Advanced Data processing
+
+* `lapply()`
+* `aggregate()`
+
+## Strings
+
+* `paste()`
+* `strsplit()`
+* `tolower()`
+* `toupper()`
+
+## Plotting
+
+* `hist()`
+
+This function creates a histogram graph of a given set of data.
+```{r}
+x <- c(1,20,50)
+hist(x)
+```
+
+* `plot()`
+
+This function creates a plot graph of a given set of data.
+```{r}
+x <- cbind(c(1,2,3,4),c(10,20,30,40))
+plot(x)
+```
+
+
+## Distributions
+
+* `rnorm()`
+
+This function inserts a normal distribution.
+```{r, eval=F}
+rnorm(100, mean = 50, sd=2)
+```
+
+Because of `eval=F`, the code will not be evaluated in the last piece of code.

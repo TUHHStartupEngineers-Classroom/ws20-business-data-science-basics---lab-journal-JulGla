@@ -1,0 +1,41 @@
+---
+title: "Data Wrangling"
+date: "Nov 5, 2020"
+output: html_document
+---
+
+# Example
+
+To explore the basic data manipulation verbs of the package `dplyr`, we’ll use the datasets `mtcars` (comes with RStudio). The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). The data is documented in `?mtcars`.
+
+The following code chunks will only print something, if you've installed the package `dplyr`. That is why everything is wrapped in a `if` condition. 
+
+To do so, run:
+
+```{r eval=F}
+install.packages("dplyr")
+```
+
+```{r, message=FALSE}
+if ("dplyr" %in% rownames(installed.packages())) {
+
+  # Load libraries
+  library(dplyr)
+  
+  # Print the dataframe
+  mtcars
+
+}
+```
+
+`filter()` allows you to subset observations based on their values. The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame. For example, we can select all cars with 4 cylinders and more than 90 horsepower:
+
+```{r}
+if ("dplyr" %in% rownames(installed.packages())) {
+
+  filter(mtcars, cyl == 4, hp > 90)
+  
+}  
+```
+
+...

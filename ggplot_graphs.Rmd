@@ -1,0 +1,45 @@
+---
+title: "ggplot Graphs"
+author: "Joschka Schwarz"
+date: "Nov 5, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The following code chunks will only print something, if you've installed the package `ggplot2`.
+
+Install it by running:
+
+```{r eval=F}
+install.packages("ggplot2")
+```
+
+After installing it, you can remove the `if` conditions in the next code chunks.
+
+```{r}
+if ("ggplot2" %in% rownames(installed.packages())) {
+  
+  # Laod plotting library
+  library(ggplot2)
+
+  # Print data
+  mpg
+  
+  }
+
+```
+
+```{r}
+if ("ggplot2" %in% rownames(installed.packages())) {
+  
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth()
+  
+}
+```
+
+...

@@ -1,0 +1,22 @@
+---
+title: "MyLabJournal"
+output: html_document
+---
+
+<div style="padding-top: 30px;"></div>
+
+![](images/logo.png)
+
+# **My Lab Journal**
+
+This is a template example for lab journaling. Students in the data science courses at the Institute of Entrepreneurship will use this template to learn R for business analytics. Students can replace this text as they wish.
+
+## How to use
+
+1. Fork the repository for this website and follow the instructions in the README to get set up: [https://github.com/TUHHStartupEngineers/lab_journal_website](https://github.com/TUHHStartupEngineers/lab_journal_website)
+
+2. Blog/journal what you are doing in R, by editing the `Journal.Rmd` file. See the [Journal page](https://tuhhstartupengineers.github.io/lab_journal_website/journal.html) for an example of what to do to get started learning R. Moreover, you can edit/add/remove files, that are listed in the navigation bar under class notes. Modify that section as much as you want to make it your own place of knowledge. To change or add more entries, modify the `_site.yml` accordingly.
+
+3. See the [links page](https://tuhhstartupengineers.github.io/lab_journal_website/links.html) for lots of helpful links on learning R.
+
+4. Change everything to make it your own.

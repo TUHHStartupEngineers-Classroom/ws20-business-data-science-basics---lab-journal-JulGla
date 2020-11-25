@@ -92,6 +92,7 @@ sales_by_year_tbl
 
 
 # Step 2 - Visualize
+```{r}
 sales_by_year_tbl %>%
   ggplot(aes(x = year, y = sales)) +
   geom_col(fill = "#2DC6D6") + 
@@ -107,10 +108,13 @@ sales_by_year_tbl %>%
     x = "",
     y = "Revenue"
   )
+```
+
 
 # 6.2 Sales by Year and Category 2 ----
 
 # Step 1 - Manipulate
+```{r}
 sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
   select(order_date, total_price, category_1) %>%
   mutate(year = year(order_date)) %>%
@@ -123,8 +127,11 @@ sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
                                      suffix = " €"))
 
 sales_by_year_cat_1_tbl 
+```
+
 
 # Step 2 - Visualize
+```{r}
 sales_by_year_cat_1_tbl %>%
   ggplot(aes(x = year, y = sales, fill = category_1)) +
   geom_col() +
@@ -138,26 +145,34 @@ sales_by_year_cat_1_tbl %>%
     subtitle = "Each product category has an upward trend",
     fill = "Main category"
   )
+```
 
 
 # 7.0 Writing Files ----
 
 # 7.1 Excel ----
+```{r}
 install.packages("writexl")
 library("writexl")
 bike_orderlines_wrangled_tbl %>%
   write_xlsx("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx")
+```
 
 # 7.2 CSV ----
+```{r}
 bike_orderlines_wrangled_tbl %>% 
   write_csv("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.csv")
+```
 
 # 7.3 RDS ----
+```{r}
 bike_orderlines_wrangled_tbl %>% 
   write_rds("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.rds")
+```
 
 # 8 Challenge ----
 # Step 1 - Manipulate
+```{r}
 bike_state_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
   separate(col    = category,
            into   = c("category.1", "category.2", "category.3"),
@@ -174,7 +189,9 @@ bike_state_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
          everything()) %>%
   rename(bikeshop = name) %>%
   set_names(names(.) %>% str_replace_all("\\.", "_"))
+```
 
+```{r}
 sales_by_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
   select(state, total_price) %>%
   group_by(state) %>% 
@@ -183,10 +200,14 @@ sales_by_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
                                      decimal.mark = ",", 
                                      prefix = "", 
                                      suffix = " €"))
+```
 
+```{r}
 sales_by_state_tbl
+```
 
 # Step 2 - Visualize
+```{r}
 sales_by_state_tbl %>%
   ggplot(aes(x = state, y = sales)) +
   geom_col(fill = "#2DC6D6") + 
@@ -203,10 +224,11 @@ sales_by_state_tbl %>%
     x = "State",
     y = "Revenue"
   )
+```
 
 # Analyze the sales by location and year ----
 # Step 1 - Manipulate
-
+```{r}
 sales_by_year_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
   select(order_date, total_price, state) %>%
   mutate(year = year(order_date)) %>%
@@ -217,9 +239,12 @@ sales_by_year_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
                                      decimal.mark = ",", 
                                      prefix = "", 
                                      suffix = " €"))
+```
+
 # Step 2 - Visualize
 
 # Baden-Württemberg
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Baden-Württemberg", y = sales, fill = year)) +
   geom_col() +
@@ -233,8 +258,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # Bavaria
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Bavaria", y = sales, fill = year)) +
   geom_col() +
@@ -248,8 +276,10 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
 
 # Berlin
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Berlin", y = sales, fill = year)) +
   geom_col() +
@@ -263,8 +293,10 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
 
 # Bremen
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Bremen", y = sales, fill = year)) +
   geom_col() +
@@ -278,8 +310,10 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
 
 # Hamburg
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Hamburg", y = sales, fill = year)) +
   geom_col() +
@@ -294,7 +328,10 @@ sales_by_year_state_tbl %>%
     fill = "Main category"
   )
 
+```
+
 # Hesse 
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Hesse", y = sales, fill = year)) +
   geom_col() +
@@ -308,8 +345,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # Lower Saxony
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Lower Saxony", y = sales, fill = year)) +
   geom_col() +
@@ -323,8 +363,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # Mecklenburg-Western Pomerania 
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Mecklenburg-Western Pomerania", y = sales, fill = year)) +
   geom_col() +
@@ -338,8 +381,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # North Rhine-Westphalia 
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "North Rhine-Westphalia", y = sales, fill = year)) +
   geom_col() +
@@ -353,8 +399,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # Saxony 
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Saxony", y = sales, fill = year)) +
   geom_col() +
@@ -368,8 +417,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # Saxony-Anhalt
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Saxony-Anhalt", y = sales, fill = year)) +
   geom_col() +
@@ -383,8 +435,11 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 # Schleswig-Holstein
+```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Schleswig-Holstein", y = sales, fill = year)) +
   geom_col() +
@@ -398,6 +453,8 @@ sales_by_year_state_tbl %>%
     subtitle = "",
     fill = "Main category"
   )
+```
+
 
 
 Notice that whatever you define as a top level header, automatically gets put into the table of contents bar on the left. 

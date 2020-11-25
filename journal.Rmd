@@ -30,6 +30,7 @@ Last compiled: `r Sys.Date()`
 library(tidyverse)
 library(readxl)
 library(lubridate)
+library(writexl)
 ```
 
 # 2.0 Importing Files ----
@@ -152,8 +153,6 @@ sales_by_year_cat_1_tbl %>%
 
 # 7.1 Excel ----
 ```{r}
-install.packages("writexl")
-library("writexl")
 bike_orderlines_wrangled_tbl %>%
   write_xlsx("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx")
 ```

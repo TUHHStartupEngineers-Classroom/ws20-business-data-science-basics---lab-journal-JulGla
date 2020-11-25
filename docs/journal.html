@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Julian Glaßmeyer" />
+
+<meta name="date" content="2020-11-25" />
+
+<title>Journal (reproducible report)</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">MyLabJournal</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="journal.html">Journal</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Class notes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="dictionary.html">Dictionary</a>
+    </li>
+    <li>
+      <a href="data_wrangling.html">Data Wrangling</a>
+    </li>
+    <li>
+      <a href="ggplot_graphs.html">ggplot graphs</a>
+    </li>
+    <li>
+      <a href="machine_learning.html">machine learning</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="links.html">Links</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Journal (reproducible report)</h1>
+<h4 class="author">Julian Glaßmeyer</h4>
+<h4 class="date">2020-11-25</h4>
+
+</div>
+
+
+<div id="my-first-post" class="section level1">
+<h1><span class="header-section-number">1</span> My first post</h1>
+<p>Last compiled: 2020-11-25</p>
+</div>
+<div id="data-science-at-tuhh" class="section level1">
+<h1><span class="header-section-number">2</span> Data Science at TUHH ——————————————————</h1>
+</div>
+<div id="sales-analysis--" class="section level1">
+<h1><span class="header-section-number">3</span> SALES ANALYSIS —-</h1>
+</div>
+<div id="load-libraries--" class="section level1">
+<h1><span class="header-section-number">4</span> 1.0 Load libraries —-</h1>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(lubridate)
+library(writexl)</code></pre>
+</div>
+<div id="importing-files--" class="section level1">
+<h1><span class="header-section-number">5</span> 2.0 Importing Files —-</h1>
+<pre class="r"><code>bikes_tbl      &lt;- read_excel(path = &quot;00_data/01_bike_sales/01_raw_data/bikes.xlsx&quot;)
+orderlines_tbl &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/orderlines.xlsx&quot;)
+bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshops.xlsx&quot;)</code></pre>
+</div>
+<div id="joining-data--" class="section level1">
+<h1><span class="header-section-number">6</span> 4.0 Joining Data —-</h1>
+<pre class="r"><code>bike_orderlines_joined_tbl &lt;- orderlines_tbl %&gt;%
+  left_join(bikes_tbl, by = c(&quot;product.id&quot; = &quot;bike.id&quot;)) %&gt;%
+  left_join(bikeshops_tbl, by = c(&quot;customer.id&quot; = &quot;bikeshop.id&quot;))
+bike_orderlines_joined_tbl %&gt;% glimpse()</code></pre>
+<pre><code>## Rows: 15,644
+## Columns: 19
+## $ ...1           &lt;chr&gt; &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10…
+## $ order.id       &lt;dbl&gt; 1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 6, 6, …
+## $ order.line     &lt;dbl&gt; 1, 2, 1, 2, 1, 2, 3, 4, 5, 1, 1, 2, 3, 4, 1, 2, …
+## $ order.date     &lt;dttm&gt; 2015-01-07, 2015-01-07, 2015-01-10, 2015-01-10,…
+## $ customer.id    &lt;dbl&gt; 2, 2, 10, 10, 6, 6, 6, 6, 6, 22, 8, 8, 8, 8, 16,…
+## $ product.id     &lt;dbl&gt; 2681, 2411, 2629, 2137, 2367, 1973, 2422, 2655, …
+## $ quantity       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, …
+## $ model          &lt;chr&gt; &quot;Spectral CF 7 WMN&quot;, &quot;Ultimate CF SLX Disc 8.0 E…
+## $ model.year     &lt;dbl&gt; 2021, 2020, 2021, 2019, 2020, 2020, 2020, 2021, …
+## $ frame.material &lt;chr&gt; &quot;carbon&quot;, &quot;carbon&quot;, &quot;carbon&quot;, &quot;carbon&quot;, &quot;alumini…
+## $ weight         &lt;dbl&gt; 13.80, 7.44, 14.06, 8.80, 11.50, 8.80, 8.20, 8.8…
+## $ price          &lt;dbl&gt; 3119, 5359, 2729, 1749, 1219, 1359, 2529, 1559, …
+## $ category       &lt;chr&gt; &quot;Mountain - Trail - Spectral&quot;, &quot;Road - Race - Ul…
+## $ gender         &lt;chr&gt; &quot;female&quot;, &quot;unisex&quot;, &quot;unisex&quot;, &quot;unisex&quot;, &quot;unisex&quot;…
+## $ url            &lt;chr&gt; &quot;https://www.canyon.com/en-de/mountain-bikes/tra…
+## $ name           &lt;chr&gt; &quot;AlexandeRad&quot;, &quot;AlexandeRad&quot;, &quot;WITT-RAD&quot;, &quot;WITT-…
+## $ location       &lt;chr&gt; &quot;Hamburg, Hamburg&quot;, &quot;Hamburg, Hamburg&quot;, &quot;Bremen,…
+## $ lat            &lt;dbl&gt; 53.57532, 53.57532, 53.07379, 53.07379, 48.78234…
+## $ lng            &lt;dbl&gt; 10.015340, 10.015340, 8.826754, 8.826754, 9.1808…</code></pre>
+</div>
+<div id="wrangling-data--" class="section level1">
+<h1><span class="header-section-number">7</span> 5.0 Wrangling Data —-</h1>
+<pre class="r"><code>bike_orderlines_joined_tbl$category</code></pre>
+<pre><code>##    [1] &quot;Mountain - Trail - Spectral&quot;           
+##    [2] &quot;Road - Race - Ultimate&quot;                
+##    [3] &quot;Mountain - Trail - Neuron&quot;             
+##    [4] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##    [5] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##    [6] &quot;Hybrid / City - City - Roadlite&quot;       
+##    [7] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##    [8] &quot;Road - Cyclocross - Inflite&quot;           
+##    [9] &quot;Mountain - Enduro - Torque&quot;            
+##   [10] &quot;Road - Race - Ultimate&quot;                
+##   [11] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##   [12] &quot;Road - Race - Ultimate&quot;                
+##   [13] &quot;Gravel - All-Road - Grail&quot;             
+##   [14] &quot;Mountain - Enduro - Torque&quot;            
+##   [15] &quot;Gravel - All-Road - Grail&quot;             
+##   [16] &quot;Road - Endurance - Endurace&quot;           
+##   [17] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##   [18] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##   [19] &quot;Mountain - Trail - Grand Canyon&quot;       
+##   [20] &quot;Gravel - All-Road - Grail&quot;             
+##   [21] &quot;Road - Race - Ultimate&quot;                
+##   [22] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##   [23] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [24] &quot;Gravel - All-Road - Grail&quot;             
+##   [25] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [26] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##   [27] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##   [28] &quot;Road - Endurance - Endurace&quot;           
+##   [29] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##   [30] &quot;Road - Endurance - Endurace&quot;           
+##   [31] &quot;Road - Race - Ultimate&quot;                
+##   [32] &quot;Gravel - All-Road - Grail&quot;             
+##   [33] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [34] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##   [35] &quot;Mountain - Trail - Grand Canyon&quot;       
+##   [36] &quot;Mountain - Trail - Spectral&quot;           
+##   [37] &quot;Mountain - Enduro - Strive&quot;            
+##   [38] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##   [39] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##   [40] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##   [41] &quot;Mountain - Trail - Neuron&quot;             
+##   [42] &quot;Mountain - Trail - Spectral&quot;           
+##   [43] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##   [44] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##   [45] &quot;Hybrid / City - City - Commuter&quot;       
+##   [46] &quot;Gravel - All-Road - Grail&quot;             
+##   [47] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##   [48] &quot;Gravel - All-Road - Grail&quot;             
+##   [49] &quot;Mountain - Enduro - Strive&quot;            
+##   [50] &quot;Hybrid / City - City - Commuter&quot;       
+##   [51] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##   [52] &quot;Gravel - Adventure - Grail&quot;            
+##   [53] &quot;Road - Race - Ultimate&quot;                
+##   [54] &quot;Road - Race - Ultimate&quot;                
+##   [55] &quot;Mountain - Downhill - Sender&quot;          
+##   [56] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [57] &quot;Mountain - Fat Bikes - Dude&quot;           
+##   [58] &quot;Road - Race - Ultimate&quot;                
+##   [59] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##   [60] &quot;Road - Endurance - Endurace&quot;           
+##   [61] &quot;Road - Race - Ultimate&quot;                
+##   [62] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [63] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##   [64] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [65] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##   [66] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##   [67] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##   [68] &quot;Road - Race - Ultimate&quot;                
+##   [69] &quot;Road - Race - Ultimate&quot;                
+##   [70] &quot;Mountain - Trail - Neuron&quot;             
+##   [71] &quot;Mountain - Cross-Country - Lux&quot;        
+##   [72] &quot;Mountain - Trail - Grand Canyon&quot;       
+##   [73] &quot;Mountain - Trail - Spectral&quot;           
+##   [74] &quot;Road - Endurance - Endurace&quot;           
+##   [75] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##   [76] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##   [77] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##   [78] &quot;Road - Endurance - Endurace&quot;           
+##   [79] &quot;Road - Endurance - Endurace&quot;           
+##   [80] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##   [81] &quot;Road - Endurance - Endurace&quot;           
+##   [82] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##   [83] &quot;Mountain - Trail - Grand Canyon&quot;       
+##   [84] &quot;Gravel - All-Road - Grail&quot;             
+##   [85] &quot;Road - Race - Aeroad&quot;                  
+##   [86] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##   [87] &quot;Mountain - Trail - Spectral&quot;           
+##   [88] &quot;Road - Race - Ultimate&quot;                
+##   [89] &quot;Road - Race - Ultimate&quot;                
+##   [90] &quot;Road - Cyclocross - Inflite&quot;           
+##   [91] &quot;Mountain - Trail - Spectral&quot;           
+##   [92] &quot;Road - Race - Ultimate&quot;                
+##   [93] &quot;Road - Race - Ultimate&quot;                
+##   [94] &quot;Mountain - Trail - Spectral&quot;           
+##   [95] &quot;Mountain - Trail - Grand Canyon&quot;       
+##   [96] &quot;Mountain - Trail - Grand Canyon&quot;       
+##   [97] &quot;Mountain - Trail - Spectral&quot;           
+##   [98] &quot;Road - Cyclocross - Inflite&quot;           
+##   [99] &quot;Hybrid / City - City - Commuter&quot;       
+##  [100] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [101] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [102] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [103] &quot;Road - Race - Ultimate&quot;                
+##  [104] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [105] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [106] &quot;Mountain - Downhill - Sender&quot;          
+##  [107] &quot;Mountain - Trail - Neuron&quot;             
+##  [108] &quot;Road - Endurance - Endurace&quot;           
+##  [109] &quot;Road - Endurance - Endurace&quot;           
+##  [110] &quot;Road - Race - Aeroad&quot;                  
+##  [111] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [112] &quot;Mountain - Trail - Spectral&quot;           
+##  [113] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [114] &quot;Road - Endurance - Endurace&quot;           
+##  [115] &quot;Mountain - Trail - Neuron&quot;             
+##  [116] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [117] &quot;Road - Race - Ultimate&quot;                
+##  [118] &quot;Mountain - Trail - Neuron&quot;             
+##  [119] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [120] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [121] &quot;Road - Cyclocross - Inflite&quot;           
+##  [122] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [123] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [124] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [125] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [126] &quot;Road - Cyclocross - Inflite&quot;           
+##  [127] &quot;Road - Endurance - Endurace&quot;           
+##  [128] &quot;Road - Race - Ultimate&quot;                
+##  [129] &quot;Road - Endurance - Endurace&quot;           
+##  [130] &quot;Mountain - Trail - Spectral&quot;           
+##  [131] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [132] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [133] &quot;Mountain - Enduro - Torque&quot;            
+##  [134] &quot;Mountain - Enduro - Strive&quot;            
+##  [135] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [136] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [137] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [138] &quot;Road - Cyclocross - Inflite&quot;           
+##  [139] &quot;Road - Race - Ultimate&quot;                
+##  [140] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [141] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [142] &quot;Gravel - All-Road - Grail&quot;             
+##  [143] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [144] &quot;Mountain - Trail - Neuron&quot;             
+##  [145] &quot;Mountain - Trail - Spectral&quot;           
+##  [146] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [147] &quot;Gravel - All-Road - Grail&quot;             
+##  [148] &quot;Mountain - Trail - Neuron&quot;             
+##  [149] &quot;Mountain - Downhill - Sender&quot;          
+##  [150] &quot;Mountain - Enduro - Strive&quot;            
+##  [151] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [152] &quot;Mountain - Trail - Neuron&quot;             
+##  [153] &quot;Hybrid / City - City - Commuter&quot;       
+##  [154] &quot;Road - Endurance - Endurace&quot;           
+##  [155] &quot;Mountain - Trail - Spectral&quot;           
+##  [156] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [157] &quot;Mountain - Trail - Neuron&quot;             
+##  [158] &quot;Road - Endurance - Endurace&quot;           
+##  [159] &quot;Road - Cyclocross - Inflite&quot;           
+##  [160] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [161] &quot;Gravel - All-Road - Grail&quot;             
+##  [162] &quot;Road - Race - Aeroad&quot;                  
+##  [163] &quot;Gravel - All-Road - Grail&quot;             
+##  [164] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [165] &quot;Mountain - Enduro - Torque&quot;            
+##  [166] &quot;Road - Endurance - Endurace&quot;           
+##  [167] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [168] &quot;Road - Cyclocross - Inflite&quot;           
+##  [169] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [170] &quot;Road - Endurance - Endurace&quot;           
+##  [171] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [172] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [173] &quot;Road - Endurance - Endurace&quot;           
+##  [174] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [175] &quot;Mountain - Downhill - Sender&quot;          
+##  [176] &quot;Road - Cyclocross - Inflite&quot;           
+##  [177] &quot;Mountain - Trail - Neuron&quot;             
+##  [178] &quot;Gravel - All-Road - Grail&quot;             
+##  [179] &quot;Road - Endurance - Endurace&quot;           
+##  [180] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [181] &quot;Road - Endurance - Endurace&quot;           
+##  [182] &quot;Mountain - Trail - Neuron&quot;             
+##  [183] &quot;Road - Race - Aeroad&quot;                  
+##  [184] &quot;Gravel - All-Road - Grail&quot;             
+##  [185] &quot;Road - Race - Ultimate&quot;                
+##  [186] &quot;Mountain - Trail - Neuron&quot;             
+##  [187] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [188] &quot;Mountain - Trail - Neuron&quot;             
+##  [189] &quot;Road - Endurance - Endurace&quot;           
+##  [190] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [191] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [192] &quot;Gravel - All-Road - Grail&quot;             
+##  [193] &quot;Mountain - Trail - Spectral&quot;           
+##  [194] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [195] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [196] &quot;Road - Race - Aeroad&quot;                  
+##  [197] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [198] &quot;Mountain - Trail - Spectral&quot;           
+##  [199] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [200] &quot;Road - Race - Ultimate&quot;                
+##  [201] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [202] &quot;Mountain - Trail - Spectral&quot;           
+##  [203] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [204] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [205] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [206] &quot;Mountain - Trail - Spectral&quot;           
+##  [207] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [208] &quot;Mountain - Trail - Neuron&quot;             
+##  [209] &quot;Road - Endurance - Endurace&quot;           
+##  [210] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [211] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [212] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [213] &quot;Road - Race - Aeroad&quot;                  
+##  [214] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [215] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [216] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [217] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [218] &quot;Mountain - Trail - Spectral&quot;           
+##  [219] &quot;Road - Cyclocross - Inflite&quot;           
+##  [220] &quot;Road - Endurance - Endurace&quot;           
+##  [221] &quot;Gravel - All-Road - Grail&quot;             
+##  [222] &quot;Road - Race - Aeroad&quot;                  
+##  [223] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [224] &quot;Road - Endurance - Endurace&quot;           
+##  [225] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [226] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [227] &quot;Road - Endurance - Endurace&quot;           
+##  [228] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [229] &quot;Road - Endurance - Endurace&quot;           
+##  [230] &quot;Mountain - Trail - Neuron&quot;             
+##  [231] &quot;Road - Endurance - Endurace&quot;           
+##  [232] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [233] &quot;Gravel - All-Road - Grail&quot;             
+##  [234] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [235] &quot;Road - Endurance - Endurace&quot;           
+##  [236] &quot;Road - Race - Ultimate&quot;                
+##  [237] &quot;Mountain - Trail - Neuron&quot;             
+##  [238] &quot;Road - Race - Ultimate&quot;                
+##  [239] &quot;Mountain - Enduro - Strive&quot;            
+##  [240] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [241] &quot;Mountain - Downhill - Sender&quot;          
+##  [242] &quot;Mountain - Trail - Spectral&quot;           
+##  [243] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [244] &quot;Gravel - All-Road - Grail&quot;             
+##  [245] &quot;Road - Endurance - Endurace&quot;           
+##  [246] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [247] &quot;Mountain - Enduro - Torque&quot;            
+##  [248] &quot;Road - Race - Aeroad&quot;                  
+##  [249] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [250] &quot;Mountain - Trail - Spectral&quot;           
+##  [251] &quot;Road - Endurance - Endurace&quot;           
+##  [252] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [253] &quot;Gravel - All-Road - Grail&quot;             
+##  [254] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [255] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [256] &quot;Mountain - Enduro - Torque&quot;            
+##  [257] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [258] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [259] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [260] &quot;Road - Cyclocross - Inflite&quot;           
+##  [261] &quot;Mountain - Trail - Spectral&quot;           
+##  [262] &quot;Mountain - Trail - Spectral&quot;           
+##  [263] &quot;Road - Cyclocross - Inflite&quot;           
+##  [264] &quot;Mountain - Downhill - Sender&quot;          
+##  [265] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [266] &quot;Mountain - Enduro - Torque&quot;            
+##  [267] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [268] &quot;Road - Race - Aeroad&quot;                  
+##  [269] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [270] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [271] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [272] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [273] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [274] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [275] &quot;Mountain - Trail - Neuron&quot;             
+##  [276] &quot;Gravel - All-Road - Grail&quot;             
+##  [277] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [278] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [279] &quot;Road - Endurance - Endurace&quot;           
+##  [280] &quot;Gravel - All-Road - Grail&quot;             
+##  [281] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [282] &quot;Mountain - Enduro - Strive&quot;            
+##  [283] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [284] &quot;Mountain - Downhill - Sender&quot;          
+##  [285] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [286] &quot;Road - Race - Ultimate&quot;                
+##  [287] &quot;Road - Endurance - Endurace&quot;           
+##  [288] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [289] &quot;Gravel - All-Road - Grail&quot;             
+##  [290] &quot;Road - Race - Ultimate&quot;                
+##  [291] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [292] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [293] &quot;Mountain - Trail - Spectral&quot;           
+##  [294] &quot;Mountain - Trail - Neuron&quot;             
+##  [295] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [296] &quot;Mountain - Trail - Spectral&quot;           
+##  [297] &quot;Road - Endurance - Endurace&quot;           
+##  [298] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [299] &quot;Road - Race - Aeroad&quot;                  
+##  [300] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [301] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [302] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [303] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [304] &quot;Mountain - Downhill - Sender&quot;          
+##  [305] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [306] &quot;Mountain - Trail - Neuron&quot;             
+##  [307] &quot;Gravel - All-Road - Grail&quot;             
+##  [308] &quot;Mountain - Trail - Neuron&quot;             
+##  [309] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [310] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [311] &quot;Gravel - All-Road - Grail&quot;             
+##  [312] &quot;Road - Race - Ultimate&quot;                
+##  [313] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [314] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [315] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [316] &quot;Hybrid / City - City - Commuter&quot;       
+##  [317] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [318] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [319] &quot;Mountain - Enduro - Strive&quot;            
+##  [320] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [321] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [322] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [323] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [324] &quot;Mountain - Downhill - Sender&quot;          
+##  [325] &quot;Gravel - All-Road - Grail&quot;             
+##  [326] &quot;Road - Race - Ultimate&quot;                
+##  [327] &quot;Mountain - Trail - Spectral&quot;           
+##  [328] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [329] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [330] &quot;Road - Endurance - Endurace&quot;           
+##  [331] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [332] &quot;Gravel - All-Road - Grail&quot;             
+##  [333] &quot;Road - Race - Aeroad&quot;                  
+##  [334] &quot;Road - Cyclocross - Inflite&quot;           
+##  [335] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [336] &quot;Road - Endurance - Endurace&quot;           
+##  [337] &quot;Road - Race - Aeroad&quot;                  
+##  [338] &quot;Gravel - All-Road - Grail&quot;             
+##  [339] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [340] &quot;Road - Endurance - Endurace&quot;           
+##  [341] &quot;Mountain - Downhill - Sender&quot;          
+##  [342] &quot;Gravel - All-Road - Grail&quot;             
+##  [343] &quot;Road - Endurance - Endurace&quot;           
+##  [344] &quot;Road - Cyclocross - Inflite&quot;           
+##  [345] &quot;Gravel - All-Road - Grail&quot;             
+##  [346] &quot;Mountain - Trail - Spectral&quot;           
+##  [347] &quot;Hybrid / City - City - Commuter&quot;       
+##  [348] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [349] &quot;Mountain - Enduro - Strive&quot;            
+##  [350] &quot;Mountain - Trail - Spectral&quot;           
+##  [351] &quot;Gravel - All-Road - Grail&quot;             
+##  [352] &quot;Mountain - Trail - Spectral&quot;           
+##  [353] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [354] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [355] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [356] &quot;Hybrid / City - City - Commuter&quot;       
+##  [357] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [358] &quot;Hybrid / City - City - Commuter&quot;       
+##  [359] &quot;Road - Race - Aeroad&quot;                  
+##  [360] &quot;Gravel - All-Road - Grail&quot;             
+##  [361] &quot;Road - Endurance - Endurace&quot;           
+##  [362] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [363] &quot;Mountain - Enduro - Torque&quot;            
+##  [364] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [365] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [366] &quot;Mountain - Trail - Spectral&quot;           
+##  [367] &quot;Mountain - Enduro - Strive&quot;            
+##  [368] &quot;Gravel - All-Road - Grail&quot;             
+##  [369] &quot;Gravel - All-Road - Grail&quot;             
+##  [370] &quot;Mountain - Trail - Neuron&quot;             
+##  [371] &quot;Road - Endurance - Endurace&quot;           
+##  [372] &quot;Road - Race - Ultimate&quot;                
+##  [373] &quot;Road - Endurance - Endurace&quot;           
+##  [374] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [375] &quot;Road - Endurance - Endurace&quot;           
+##  [376] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [377] &quot;Gravel - All-Road - Grail&quot;             
+##  [378] &quot;Road - Race - Ultimate&quot;                
+##  [379] &quot;Road - Endurance - Endurace&quot;           
+##  [380] &quot;Gravel - All-Road - Grail&quot;             
+##  [381] &quot;Road - Endurance - Endurace&quot;           
+##  [382] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [383] &quot;Road - Race - Aeroad&quot;                  
+##  [384] &quot;Road - Cyclocross - Inflite&quot;           
+##  [385] &quot;Road - Endurance - Endurace&quot;           
+##  [386] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [387] &quot;Gravel - All-Road - Grail&quot;             
+##  [388] &quot;Mountain - Trail - Spectral&quot;           
+##  [389] &quot;Road - Endurance - Endurace&quot;           
+##  [390] &quot;Mountain - Enduro - Strive&quot;            
+##  [391] &quot;Road - Cyclocross - Inflite&quot;           
+##  [392] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [393] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [394] &quot;Road - Cyclocross - Inflite&quot;           
+##  [395] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [396] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [397] &quot;Mountain - Trail - Spectral&quot;           
+##  [398] &quot;Gravel - All-Road - Grail&quot;             
+##  [399] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [400] &quot;Mountain - Trail - Neuron&quot;             
+##  [401] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [402] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [403] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [404] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [405] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [406] &quot;Road - Race - Aeroad&quot;                  
+##  [407] &quot;Road - Race - Ultimate&quot;                
+##  [408] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [409] &quot;Road - Race - Ultimate&quot;                
+##  [410] &quot;Road - Race - Ultimate&quot;                
+##  [411] &quot;Road - Endurance - Endurace&quot;           
+##  [412] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [413] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [414] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [415] &quot;Road - Cyclocross - Inflite&quot;           
+##  [416] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [417] &quot;Road - Endurance - Endurace&quot;           
+##  [418] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [419] &quot;Mountain - Downhill - Sender&quot;          
+##  [420] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [421] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [422] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [423] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [424] &quot;Road - Endurance - Endurace&quot;           
+##  [425] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [426] &quot;Road - Endurance - Endurace&quot;           
+##  [427] &quot;Mountain - Trail - Neuron&quot;             
+##  [428] &quot;Road - Cyclocross - Inflite&quot;           
+##  [429] &quot;Hybrid / City - City - Commuter&quot;       
+##  [430] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [431] &quot;Road - Endurance - Endurace&quot;           
+##  [432] &quot;Road - Endurance - Endurace&quot;           
+##  [433] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [434] &quot;Road - Cyclocross - Inflite&quot;           
+##  [435] &quot;Road - Race - Ultimate&quot;                
+##  [436] &quot;Gravel - All-Road - Grail&quot;             
+##  [437] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [438] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [439] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [440] &quot;Mountain - Trail - Spectral&quot;           
+##  [441] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [442] &quot;Road - Endurance - Endurace&quot;           
+##  [443] &quot;Mountain - Enduro - Strive&quot;            
+##  [444] &quot;Mountain - Downhill - Sender&quot;          
+##  [445] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [446] &quot;Road - Cyclocross - Inflite&quot;           
+##  [447] &quot;Road - Race - Aeroad&quot;                  
+##  [448] &quot;Mountain - Trail - Spectral&quot;           
+##  [449] &quot;Road - Race - Ultimate&quot;                
+##  [450] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [451] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [452] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [453] &quot;Road - Race - Ultimate&quot;                
+##  [454] &quot;Road - Cyclocross - Inflite&quot;           
+##  [455] &quot;Road - Endurance - Endurace&quot;           
+##  [456] &quot;Road - Cyclocross - Inflite&quot;           
+##  [457] &quot;Road - Endurance - Endurace&quot;           
+##  [458] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [459] &quot;Road - Cyclocross - Inflite&quot;           
+##  [460] &quot;Road - Race - Ultimate&quot;                
+##  [461] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [462] &quot;Road - Endurance - Endurace&quot;           
+##  [463] &quot;Road - Race - Ultimate&quot;                
+##  [464] &quot;Road - Race - Ultimate&quot;                
+##  [465] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [466] &quot;Road - Race - Ultimate&quot;                
+##  [467] &quot;Gravel - All-Road - Grail&quot;             
+##  [468] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [469] &quot;Hybrid / City - City - Commuter&quot;       
+##  [470] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [471] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [472] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [473] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [474] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [475] &quot;Mountain - Trail - Neuron&quot;             
+##  [476] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [477] &quot;Road - Race - Ultimate&quot;                
+##  [478] &quot;Road - Race - Aeroad&quot;                  
+##  [479] &quot;Mountain - Downhill - Sender&quot;          
+##  [480] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [481] &quot;Mountain - Trail - Neuron&quot;             
+##  [482] &quot;Road - Endurance - Endurace&quot;           
+##  [483] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [484] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [485] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [486] &quot;Gravel - All-Road - Grail&quot;             
+##  [487] &quot;Road - Cyclocross - Inflite&quot;           
+##  [488] &quot;Mountain - Trail - Spectral&quot;           
+##  [489] &quot;Road - Cyclocross - Inflite&quot;           
+##  [490] &quot;Road - Race - Ultimate&quot;                
+##  [491] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [492] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [493] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [494] &quot;Road - Race - Ultimate&quot;                
+##  [495] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [496] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [497] &quot;Mountain - Trail - Neuron&quot;             
+##  [498] &quot;Gravel - All-Road - Grail&quot;             
+##  [499] &quot;Road - Endurance - Endurace&quot;           
+##  [500] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [501] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [502] &quot;Road - Cyclocross - Inflite&quot;           
+##  [503] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [504] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [505] &quot;Mountain - Enduro - Torque&quot;            
+##  [506] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [507] &quot;Mountain - Enduro - Torque&quot;            
+##  [508] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [509] &quot;Gravel - All-Road - Grail&quot;             
+##  [510] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [511] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [512] &quot;Road - Endurance - Endurace&quot;           
+##  [513] &quot;Mountain - Trail - Spectral&quot;           
+##  [514] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [515] &quot;Road - Race - Ultimate&quot;                
+##  [516] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [517] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [518] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [519] &quot;Road - Race - Ultimate&quot;                
+##  [520] &quot;Road - Race - Aeroad&quot;                  
+##  [521] &quot;Gravel - All-Road - Grail&quot;             
+##  [522] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [523] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [524] &quot;Road - Cyclocross - Inflite&quot;           
+##  [525] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [526] &quot;Mountain - Trail - Spectral&quot;           
+##  [527] &quot;Mountain - Enduro - Torque&quot;            
+##  [528] &quot;Mountain - Trail - Neuron&quot;             
+##  [529] &quot;Road - Endurance - Endurace&quot;           
+##  [530] &quot;Mountain - Enduro - Strive&quot;            
+##  [531] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [532] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [533] &quot;Road - Race - Ultimate&quot;                
+##  [534] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [535] &quot;Mountain - Enduro - Strive&quot;            
+##  [536] &quot;Road - Cyclocross - Inflite&quot;           
+##  [537] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [538] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [539] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [540] &quot;Gravel - All-Road - Grail&quot;             
+##  [541] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [542] &quot;Road - Race - Aeroad&quot;                  
+##  [543] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [544] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [545] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [546] &quot;Mountain - Trail - Neuron&quot;             
+##  [547] &quot;Mountain - Trail - Neuron&quot;             
+##  [548] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [549] &quot;Gravel - All-Road - Grail&quot;             
+##  [550] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [551] &quot;Gravel - Adventure - Grail&quot;            
+##  [552] &quot;Road - Cyclocross - Inflite&quot;           
+##  [553] &quot;Mountain - Trail - Neuron&quot;             
+##  [554] &quot;Mountain - Enduro - Strive&quot;            
+##  [555] &quot;Mountain - Enduro - Torque&quot;            
+##  [556] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [557] &quot;Road - Endurance - Endurace&quot;           
+##  [558] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [559] &quot;Mountain - Trail - Spectral&quot;           
+##  [560] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [561] &quot;Gravel - All-Road - Grail&quot;             
+##  [562] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [563] &quot;Gravel - All-Road - Grail&quot;             
+##  [564] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [565] &quot;Road - Race - Ultimate&quot;                
+##  [566] &quot;Mountain - Trail - Neuron&quot;             
+##  [567] &quot;Mountain - Trail - Neuron&quot;             
+##  [568] &quot;Mountain - Trail - Neuron&quot;             
+##  [569] &quot;Road - Cyclocross - Inflite&quot;           
+##  [570] &quot;Road - Cyclocross - Inflite&quot;           
+##  [571] &quot;Road - Race - Ultimate&quot;                
+##  [572] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [573] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [574] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [575] &quot;Gravel - All-Road - Grail&quot;             
+##  [576] &quot;Mountain - Trail - Neuron&quot;             
+##  [577] &quot;Road - Race - Aeroad&quot;                  
+##  [578] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [579] &quot;Gravel - All-Road - Grail&quot;             
+##  [580] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [581] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [582] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [583] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [584] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [585] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [586] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [587] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [588] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [589] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [590] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [591] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [592] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [593] &quot;Hybrid / City - City - Commuter&quot;       
+##  [594] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [595] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [596] &quot;Road - Race - Ultimate&quot;                
+##  [597] &quot;Mountain - Enduro - Strive&quot;            
+##  [598] &quot;Mountain - Trail - Spectral&quot;           
+##  [599] &quot;Gravel - All-Road - Grail&quot;             
+##  [600] &quot;Road - Endurance - Endurace&quot;           
+##  [601] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [602] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [603] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [604] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [605] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [606] &quot;Road - Endurance - Endurace&quot;           
+##  [607] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [608] &quot;Road - Endurance - Endurace&quot;           
+##  [609] &quot;Road - Race - Ultimate&quot;                
+##  [610] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [611] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [612] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [613] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [614] &quot;Road - Endurance - Endurace&quot;           
+##  [615] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [616] &quot;Gravel - Adventure - Grail&quot;            
+##  [617] &quot;Gravel - Adventure - Grail&quot;            
+##  [618] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [619] &quot;Mountain - Trail - Spectral&quot;           
+##  [620] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [621] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [622] &quot;Road - Race - Aeroad&quot;                  
+##  [623] &quot;Mountain - Enduro - Torque&quot;            
+##  [624] &quot;Road - Race - Ultimate&quot;                
+##  [625] &quot;Mountain - Enduro - Strive&quot;            
+##  [626] &quot;Mountain - Trail - Neuron&quot;             
+##  [627] &quot;Road - Race - Aeroad&quot;                  
+##  [628] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [629] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [630] &quot;Road - Race - Ultimate&quot;                
+##  [631] &quot;Mountain - Trail - Neuron&quot;             
+##  [632] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [633] &quot;Road - Race - Ultimate&quot;                
+##  [634] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [635] &quot;Mountain - Enduro - Torque&quot;            
+##  [636] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [637] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [638] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [639] &quot;Road - Race - Aeroad&quot;                  
+##  [640] &quot;Mountain - Trail - Neuron&quot;             
+##  [641] &quot;Road - Endurance - Endurace&quot;           
+##  [642] &quot;Mountain - Trail - Spectral&quot;           
+##  [643] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [644] &quot;Road - Race - Ultimate&quot;                
+##  [645] &quot;Road - Endurance - Endurace&quot;           
+##  [646] &quot;Mountain - Enduro - Torque&quot;            
+##  [647] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [648] &quot;Mountain - Trail - Spectral&quot;           
+##  [649] &quot;Road - Cyclocross - Inflite&quot;           
+##  [650] &quot;Mountain - Enduro - Strive&quot;            
+##  [651] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [652] &quot;Road - Race - Aeroad&quot;                  
+##  [653] &quot;Mountain - Enduro - Torque&quot;            
+##  [654] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [655] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [656] &quot;Mountain - Trail - Spectral&quot;           
+##  [657] &quot;Road - Endurance - Endurace&quot;           
+##  [658] &quot;Road - Endurance - Endurace&quot;           
+##  [659] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [660] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [661] &quot;Mountain - Downhill - Sender&quot;          
+##  [662] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [663] &quot;Gravel - All-Road - Grail&quot;             
+##  [664] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [665] &quot;Road - Endurance - Endurace&quot;           
+##  [666] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [667] &quot;Road - Race - Aeroad&quot;                  
+##  [668] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [669] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [670] &quot;Gravel - All-Road - Grail&quot;             
+##  [671] &quot;Mountain - Downhill - Sender&quot;          
+##  [672] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [673] &quot;Gravel - All-Road - Grail&quot;             
+##  [674] &quot;Road - Endurance - Endurace&quot;           
+##  [675] &quot;Road - Race - Ultimate&quot;                
+##  [676] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [677] &quot;Mountain - Enduro - Torque&quot;            
+##  [678] &quot;Mountain - Trail - Spectral&quot;           
+##  [679] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [680] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [681] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [682] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [683] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [684] &quot;Mountain - Enduro - Torque&quot;            
+##  [685] &quot;Road - Race - Ultimate&quot;                
+##  [686] &quot;Road - Race - Ultimate&quot;                
+##  [687] &quot;Road - Race - Ultimate&quot;                
+##  [688] &quot;Road - Cyclocross - Inflite&quot;           
+##  [689] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [690] &quot;Road - Race - Aeroad&quot;                  
+##  [691] &quot;Mountain - Trail - Spectral&quot;           
+##  [692] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [693] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [694] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [695] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [696] &quot;Gravel - Adventure - Grail&quot;            
+##  [697] &quot;Hybrid / City - City - Commuter&quot;       
+##  [698] &quot;Road - Cyclocross - Inflite&quot;           
+##  [699] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [700] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [701] &quot;Mountain - Trail - Neuron&quot;             
+##  [702] &quot;Road - Endurance - Endurace&quot;           
+##  [703] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [704] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [705] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [706] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [707] &quot;Gravel - All-Road - Grail&quot;             
+##  [708] &quot;Road - Race - Ultimate&quot;                
+##  [709] &quot;Hybrid / City - City - Commuter&quot;       
+##  [710] &quot;Mountain - Trail - Neuron&quot;             
+##  [711] &quot;Road - Race - Aeroad&quot;                  
+##  [712] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [713] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [714] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [715] &quot;Hybrid / City - City - Commuter&quot;       
+##  [716] &quot;Gravel - All-Road - Grail&quot;             
+##  [717] &quot;Mountain - Trail - Spectral&quot;           
+##  [718] &quot;Road - Cyclocross - Inflite&quot;           
+##  [719] &quot;Road - Cyclocross - Inflite&quot;           
+##  [720] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [721] &quot;Mountain - Trail - Neuron&quot;             
+##  [722] &quot;Hybrid / City - City - Commuter&quot;       
+##  [723] &quot;Road - Endurance - Endurace&quot;           
+##  [724] &quot;Hybrid / City - City - Commuter&quot;       
+##  [725] &quot;Mountain - Downhill - Sender&quot;          
+##  [726] &quot;Road - Endurance - Endurace&quot;           
+##  [727] &quot;Mountain - Trail - Spectral&quot;           
+##  [728] &quot;Mountain - Trail - Spectral&quot;           
+##  [729] &quot;Road - Endurance - Endurace&quot;           
+##  [730] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [731] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [732] &quot;Road - Race - Aeroad&quot;                  
+##  [733] &quot;Road - Race - Ultimate&quot;                
+##  [734] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [735] &quot;Road - Cyclocross - Inflite&quot;           
+##  [736] &quot;Hybrid / City - City - Commuter&quot;       
+##  [737] &quot;Road - Cyclocross - Inflite&quot;           
+##  [738] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [739] &quot;Road - Race - Aeroad&quot;                  
+##  [740] &quot;Road - Race - Aeroad&quot;                  
+##  [741] &quot;Mountain - Trail - Neuron&quot;             
+##  [742] &quot;Mountain - Trail - Spectral&quot;           
+##  [743] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [744] &quot;Gravel - All-Road - Grail&quot;             
+##  [745] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [746] &quot;Hybrid / City - City - Commuter&quot;       
+##  [747] &quot;Road - Race - Aeroad&quot;                  
+##  [748] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [749] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [750] &quot;Road - Race - Aeroad&quot;                  
+##  [751] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [752] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [753] &quot;Road - Cyclocross - Inflite&quot;           
+##  [754] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [755] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [756] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [757] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [758] &quot;Gravel - All-Road - Grail&quot;             
+##  [759] &quot;Road - Race - Ultimate&quot;                
+##  [760] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [761] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [762] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [763] &quot;Road - Cyclocross - Inflite&quot;           
+##  [764] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [765] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [766] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [767] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [768] &quot;Road - Race - Ultimate&quot;                
+##  [769] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [770] &quot;Road - Race - Ultimate&quot;                
+##  [771] &quot;Mountain - Enduro - Strive&quot;            
+##  [772] &quot;Hybrid / City - City - Commuter&quot;       
+##  [773] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [774] &quot;Mountain - Trail - Spectral&quot;           
+##  [775] &quot;Mountain - Downhill - Sender&quot;          
+##  [776] &quot;Road - Endurance - Endurace&quot;           
+##  [777] &quot;Mountain - Trail - Neuron&quot;             
+##  [778] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [779] &quot;Hybrid / City - City - Commuter&quot;       
+##  [780] &quot;Road - Endurance - Endurace&quot;           
+##  [781] &quot;Gravel - All-Road - Grail&quot;             
+##  [782] &quot;Mountain - Trail - Spectral&quot;           
+##  [783] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [784] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [785] &quot;Mountain - Enduro - Strive&quot;            
+##  [786] &quot;Road - Race - Ultimate&quot;                
+##  [787] &quot;Road - Endurance - Endurace&quot;           
+##  [788] &quot;Mountain - Trail - Spectral&quot;           
+##  [789] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [790] &quot;Road - Race - Ultimate&quot;                
+##  [791] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [792] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [793] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [794] &quot;Mountain - Enduro - Torque&quot;            
+##  [795] &quot;Road - Race - Ultimate&quot;                
+##  [796] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [797] &quot;Mountain - Downhill - Sender&quot;          
+##  [798] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [799] &quot;Road - Endurance - Endurace&quot;           
+##  [800] &quot;Mountain - Downhill - Sender&quot;          
+##  [801] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [802] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [803] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [804] &quot;Road - Endurance - Endurace&quot;           
+##  [805] &quot;Road - Endurance - Endurace&quot;           
+##  [806] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [807] &quot;Road - Race - Ultimate&quot;                
+##  [808] &quot;Gravel - All-Road - Grail&quot;             
+##  [809] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [810] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [811] &quot;Gravel - All-Road - Grail&quot;             
+##  [812] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [813] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [814] &quot;Mountain - Trail - Spectral&quot;           
+##  [815] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [816] &quot;Road - Cyclocross - Inflite&quot;           
+##  [817] &quot;Road - Endurance - Endurace&quot;           
+##  [818] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [819] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [820] &quot;Mountain - Downhill - Sender&quot;          
+##  [821] &quot;Road - Endurance - Endurace&quot;           
+##  [822] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [823] &quot;Mountain - Trail - Spectral&quot;           
+##  [824] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [825] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [826] &quot;Road - Cyclocross - Inflite&quot;           
+##  [827] &quot;Gravel - All-Road - Grail&quot;             
+##  [828] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [829] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [830] &quot;Road - Race - Ultimate&quot;                
+##  [831] &quot;Road - Endurance - Endurace&quot;           
+##  [832] &quot;Mountain - Fat Bikes - Dude&quot;           
+##  [833] &quot;Mountain - Trail - Neuron&quot;             
+##  [834] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [835] &quot;Mountain - Enduro - Torque&quot;            
+##  [836] &quot;Road - Endurance - Endurace&quot;           
+##  [837] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [838] &quot;Mountain - Trail - Spectral&quot;           
+##  [839] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [840] &quot;Road - Race - Ultimate&quot;                
+##  [841] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [842] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [843] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [844] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [845] &quot;Road - Endurance - Endurace&quot;           
+##  [846] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [847] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [848] &quot;Road - Race - Ultimate&quot;                
+##  [849] &quot;Road - Endurance - Endurace&quot;           
+##  [850] &quot;Road - Race - Ultimate&quot;                
+##  [851] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [852] &quot;Road - Endurance - Endurace&quot;           
+##  [853] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [854] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [855] &quot;Mountain - Enduro - Strive&quot;            
+##  [856] &quot;Mountain - Trail - Spectral&quot;           
+##  [857] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [858] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [859] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [860] &quot;Mountain - Trail - Neuron&quot;             
+##  [861] &quot;Road - Race - Ultimate&quot;                
+##  [862] &quot;Hybrid / City - City - Commuter&quot;       
+##  [863] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [864] &quot;Mountain - Trail - Spectral&quot;           
+##  [865] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [866] &quot;Road - Cyclocross - Inflite&quot;           
+##  [867] &quot;Gravel - All-Road - Grail&quot;             
+##  [868] &quot;E-Bikes - E-Trekking - Pathlite:ON&quot;    
+##  [869] &quot;Gravel - All-Road - Grail&quot;             
+##  [870] &quot;Road - Endurance - Endurace&quot;           
+##  [871] &quot;Road - Race - Ultimate&quot;                
+##  [872] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [873] &quot;Road - Race - Ultimate&quot;                
+##  [874] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [875] &quot;Gravel - All-Road - Grail&quot;             
+##  [876] &quot;Mountain - Downhill - Sender&quot;          
+##  [877] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [878] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [879] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [880] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [881] &quot;Road - Race - Aeroad&quot;                  
+##  [882] &quot;Road - Race - Ultimate&quot;                
+##  [883] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [884] &quot;Gravel - All-Road - Grail&quot;             
+##  [885] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [886] &quot;Gravel - All-Road - Grail&quot;             
+##  [887] &quot;Mountain - Enduro - Torque&quot;            
+##  [888] &quot;Road - Race - Ultimate&quot;                
+##  [889] &quot;Mountain - Trail - Spectral&quot;           
+##  [890] &quot;Mountain - Trail - Neuron&quot;             
+##  [891] &quot;Road - Race - Aeroad&quot;                  
+##  [892] &quot;Road - Endurance - Endurace&quot;           
+##  [893] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [894] &quot;Mountain - Trail - Neuron&quot;             
+##  [895] &quot;Road - Cyclocross - Inflite&quot;           
+##  [896] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [897] &quot;Road - Endurance - Endurace&quot;           
+##  [898] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [899] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [900] &quot;Mountain - Trail - Spectral&quot;           
+##  [901] &quot;Road - Race - Ultimate&quot;                
+##  [902] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [903] &quot;Road - Race - Ultimate&quot;                
+##  [904] &quot;Gravel - All-Road - Grail&quot;             
+##  [905] &quot;Mountain - Enduro - Strive&quot;            
+##  [906] &quot;Hybrid / City - City - Commuter&quot;       
+##  [907] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [908] &quot;Road - Endurance - Endurace&quot;           
+##  [909] &quot;Road - Race - Aeroad&quot;                  
+##  [910] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [911] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [912] &quot;Road - Race - Aeroad&quot;                  
+##  [913] &quot;Road - Endurance - Endurace&quot;           
+##  [914] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [915] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [916] &quot;Mountain - Trail - Neuron&quot;             
+##  [917] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [918] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [919] &quot;Road - Endurance - Endurace&quot;           
+##  [920] &quot;Mountain - Trail - Neuron&quot;             
+##  [921] &quot;Road - Endurance - Endurace&quot;           
+##  [922] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [923] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [924] &quot;Mountain - Trail - Spectral&quot;           
+##  [925] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [926] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [927] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [928] &quot;Hybrid / City - City - Commuter&quot;       
+##  [929] &quot;Gravel - All-Road - Grail&quot;             
+##  [930] &quot;Road - Endurance - Endurace&quot;           
+##  [931] &quot;Mountain - Enduro - Strive&quot;            
+##  [932] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [933] &quot;Gravel - All-Road - Grail&quot;             
+##  [934] &quot;Mountain - Downhill - Sender&quot;          
+##  [935] &quot;Gravel - Adventure - Grail&quot;            
+##  [936] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [937] &quot;Gravel - All-Road - Grail&quot;             
+##  [938] &quot;Gravel - All-Road - Grail&quot;             
+##  [939] &quot;Road - Race - Ultimate&quot;                
+##  [940] &quot;Mountain - Trail - Neuron&quot;             
+##  [941] &quot;E-Bikes - E-City - Commuter:ON&quot;        
+##  [942] &quot;Road - Endurance - Endurace&quot;           
+##  [943] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [944] &quot;E-Bikes - E-City - Precede:ON&quot;         
+##  [945] &quot;Road - Race - Ultimate&quot;                
+##  [946] &quot;Road - Endurance - Endurace&quot;           
+##  [947] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [948] &quot;Gravel - All-Road - Grail&quot;             
+##  [949] &quot;Road - Race - Ultimate&quot;                
+##  [950] &quot;E-Bikes - E-Mountain - Spectral:ON&quot;    
+##  [951] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [952] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [953] &quot;Mountain - Trail - Neuron&quot;             
+##  [954] &quot;Mountain - Enduro - Torque&quot;            
+##  [955] &quot;Road - Race - Aeroad&quot;                  
+##  [956] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [957] &quot;Road - Endurance - Endurace&quot;           
+##  [958] &quot;Mountain - Trail - Neuron&quot;             
+##  [959] &quot;Road - Race - Ultimate&quot;                
+##  [960] &quot;Mountain - Enduro - Torque&quot;            
+##  [961] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [962] &quot;Gravel - All-Road - Grail&quot;             
+##  [963] &quot;E-Bikes - E-Mountain - Neuron:ON&quot;      
+##  [964] &quot;Road - Endurance - Endurace&quot;           
+##  [965] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [966] &quot;Road - Endurance - Endurace&quot;           
+##  [967] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [968] &quot;Mountain - Cross-Country - Lux&quot;        
+##  [969] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [970] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [971] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [972] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [973] &quot;Gravel - All-Road - Grail&quot;             
+##  [974] &quot;Road - Cyclocross - Inflite&quot;           
+##  [975] &quot;Hybrid / City - Touring - Pathlite&quot;    
+##  [976] &quot;E-Bikes - E-Fitness - Roadlite:ON&quot;     
+##  [977] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [978] &quot;Gravel - All-Road - Grail&quot;             
+##  [979] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [980] &quot;Mountain - Trail - Spectral&quot;           
+##  [981] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [982] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [983] &quot;Mountain - Trail - Neuron&quot;             
+##  [984] &quot;Road - Endurance - Endurace&quot;           
+##  [985] &quot;Road - Race - Ultimate&quot;                
+##  [986] &quot;Gravel - Adventure - Grail&quot;            
+##  [987] &quot;Mountain - Trail - Grand Canyon&quot;       
+##  [988] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [989] &quot;E-Bikes - E-Mountain - Grand Canyon:ON&quot;
+##  [990] &quot;Mountain - Cross-Country - Exceed&quot;     
+##  [991] &quot;Mountain - Dirt Jump - Stitched&quot;       
+##  [992] &quot;E-Bikes - E-Gravel - Grail:ON&quot;         
+##  [993] &quot;Mountain - Downhill - Sender&quot;          
+##  [994] &quot;Hybrid / City - City - Roadlite&quot;       
+##  [995] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [996] &quot;Gravel - All-Road - Grail&quot;             
+##  [997] &quot;Gravel - Adventure - Grail&quot;            
+##  [998] &quot;Road - Triathlon Bike - Speedmax&quot;      
+##  [999] &quot;Road - Endurance - Endurace&quot;           
+## [1000] &quot;Mountain - Trail - Spectral&quot;           
+##  [ reached getOption(&quot;max.print&quot;) -- omitted 14644 entries ]</code></pre>
+<pre class="r"><code>bike_orderlines_joined_tbl %&gt;% 
+  select(category) %&gt;%
+  filter(str_detect(category, &quot;^Mountain&quot;)) %&gt;% 
+  unique()</code></pre>
+<pre><code>## # A tibble: 10 x 1
+##    category                         
+##    &lt;chr&gt;                            
+##  1 Mountain - Trail - Spectral      
+##  2 Mountain - Trail - Neuron        
+##  3 Mountain - Dirt Jump - Stitched  
+##  4 Mountain - Enduro - Torque       
+##  5 Mountain - Trail - Grand Canyon  
+##  6 Mountain - Cross-Country - Lux   
+##  7 Mountain - Enduro - Strive       
+##  8 Mountain - Downhill - Sender     
+##  9 Mountain - Fat Bikes - Dude      
+## 10 Mountain - Cross-Country - Exceed</code></pre>
+<pre class="r"><code>bike_orderlines_wrangled_tbl &lt;- bike_orderlines_joined_tbl %&gt;%
+  separate(col    = category,
+           into   = c(&quot;category.1&quot;, &quot;category.2&quot;, &quot;category.3&quot;),
+           sep    = &quot; - &quot;) %&gt;%
+  mutate(total.price = price * quantity) %&gt;%
+  select(-...1, -gender) %&gt;%
+  select(-ends_with(&quot;.id&quot;)) %&gt;%
+  bind_cols(bike_orderlines_joined_tbl %&gt;% select(order.id)) %&gt;% 
+  select(order.id, contains(&quot;order&quot;), contains(&quot;model&quot;), contains(&quot;category&quot;),
+         price, quantity, total.price,
+         everything()) %&gt;%
+  rename(bikeshop = name) %&gt;%
+  set_names(names(.) %&gt;% str_replace_all(&quot;\\.&quot;, &quot;_&quot;))</code></pre>
+</div>
+<div id="business-insights--" class="section level1">
+<h1><span class="header-section-number">8</span> 6.0 Business Insights —-</h1>
+</div>
+<div id="sales-by-year--" class="section level1">
+<h1><span class="header-section-number">9</span> 6.1 Sales by Year —-</h1>
+</div>
+<div id="step-1---manipulate" class="section level1">
+<h1><span class="header-section-number">10</span> Step 1 - Manipulate</h1>
+<pre class="r"><code>sales_by_year_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
+  select(order_date, total_price) %&gt;%
+  mutate(year = year(order_date)) %&gt;%
+  group_by(year) %&gt;% 
+  summarize(sales = sum(total_price)) %&gt;%
+  mutate(sales_text = scales::dollar(sales, big.mark = &quot;.&quot;, 
+                                     decimal.mark = &quot;,&quot;, 
+                                     prefix = &quot;&quot;, 
+                                     suffix = &quot; €&quot;))
+
+sales_by_year_tbl</code></pre>
+<pre><code>## # A tibble: 5 x 3
+##    year    sales sales_text  
+##   &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       
+## 1  2015  9930282 9.930.282 € 
+## 2  2016 10730507 10.730.507 €
+## 3  2017 14510291 14.510.291 €
+## 4  2018 12241853 12.241.853 €
+## 5  2019 15017875 15.017.875 €</code></pre>
+</div>
+<div id="step-2---visualize" class="section level1">
+<h1><span class="header-section-number">11</span> Step 2 - Visualize</h1>
+<pre class="r"><code>sales_by_year_tbl %&gt;%
+  ggplot(aes(x = year, y = sales)) +
+  geom_col(fill = &quot;#2DC6D6&quot;) + 
+  geom_label(aes(label = sales_text)) + 
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title    = &quot;Revenue by year&quot;,
+    subtitle = &quot;Upward Trend&quot;,
+    x = &quot;&quot;,
+    y = &quot;Revenue&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="sales-by-year-and-category-2--" class="section level1">
+<h1><span class="header-section-number">12</span> 6.2 Sales by Year and Category 2 —-</h1>
+</div>
+<div id="step-1---manipulate-1" class="section level1">
+<h1><span class="header-section-number">13</span> Step 1 - Manipulate</h1>
+<pre class="r"><code>sales_by_year_cat_1_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
+  select(order_date, total_price, category_1) %&gt;%
+  mutate(year = year(order_date)) %&gt;%
+  group_by(year, category_1) %&gt;%
+  summarise(sales = sum(total_price)) %&gt;%
+  ungroup() %&gt;%
+  mutate(sales_text = scales::dollar(sales, big.mark = &quot;.&quot;, 
+                                     decimal.mark = &quot;,&quot;, 
+                                     prefix = &quot;&quot;, 
+                                     suffix = &quot; €&quot;))
+
+sales_by_year_cat_1_tbl </code></pre>
+<pre><code>## # A tibble: 25 x 4
+##     year category_1      sales sales_text 
+##    &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;      
+##  1  2015 E-Bikes       1599048 1.599.048 €
+##  2  2015 Gravel         663025 663.025 €  
+##  3  2015 Hybrid / City  502512 502.512 €  
+##  4  2015 Mountain      3254289 3.254.289 €
+##  5  2015 Road          3911408 3.911.408 €
+##  6  2016 E-Bikes       1916469 1.916.469 €
+##  7  2016 Gravel         768794 768.794 €  
+##  8  2016 Hybrid / City  512346 512.346 €  
+##  9  2016 Mountain      3288733 3.288.733 €
+## 10  2016 Road          4244165 4.244.165 €
+## # … with 15 more rows</code></pre>
+</div>
+<div id="step-2---visualize-1" class="section level1">
+<h1><span class="header-section-number">14</span> Step 2 - Visualize</h1>
+<pre class="r"><code>sales_by_year_cat_1_tbl %&gt;%
+  ggplot(aes(x = year, y = sales, fill = category_1)) +
+  geom_col() +
+  facet_wrap(~ category_1) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue by year and main category&quot;,
+    subtitle = &quot;Each product category has an upward trend&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="writing-files--" class="section level1">
+<h1><span class="header-section-number">15</span> 7.0 Writing Files —-</h1>
+</div>
+<div id="excel--" class="section level1">
+<h1><span class="header-section-number">16</span> 7.1 Excel —-</h1>
+<pre class="r"><code>bike_orderlines_wrangled_tbl %&gt;%
+  write_xlsx(&quot;00_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx&quot;)</code></pre>
+</div>
+<div id="csv--" class="section level1">
+<h1><span class="header-section-number">17</span> 7.2 CSV —-</h1>
+<pre class="r"><code>bike_orderlines_wrangled_tbl %&gt;% 
+  write_csv(&quot;00_data/01_bike_sales/02_wrangled_data/bike_orderlines.csv&quot;)</code></pre>
+</div>
+<div id="rds--" class="section level1">
+<h1><span class="header-section-number">18</span> 7.3 RDS —-</h1>
+<pre class="r"><code>bike_orderlines_wrangled_tbl %&gt;% 
+  write_rds(&quot;00_data/01_bike_sales/02_wrangled_data/bike_orderlines.rds&quot;)</code></pre>
+</div>
+<div id="challenge--" class="section level1">
+<h1><span class="header-section-number">19</span> 8 Challenge —-</h1>
+</div>
+<div id="step-1---manipulate-2" class="section level1">
+<h1><span class="header-section-number">20</span> Step 1 - Manipulate</h1>
+<pre class="r"><code>bike_state_orderlines_wrangled_tbl &lt;- bike_orderlines_joined_tbl %&gt;%
+  separate(col    = category,
+           into   = c(&quot;category.1&quot;, &quot;category.2&quot;, &quot;category.3&quot;),
+           sep    = &quot; - &quot;) %&gt;%
+  separate(col    = location,
+           into   = c(&quot;city&quot;, &quot;state&quot;),
+           sep    = &quot;, &quot;) %&gt;%
+  mutate(total.price = price * quantity) %&gt;%
+  select(-...1, -gender) %&gt;%
+  select(-ends_with(&quot;.id&quot;)) %&gt;%
+  bind_cols(bike_orderlines_joined_tbl %&gt;% select(order.id)) %&gt;% 
+  select(order.id, contains(&quot;order&quot;), contains(&quot;model&quot;), contains(&quot;category&quot;),
+         price, quantity, total.price,
+         everything()) %&gt;%
+  rename(bikeshop = name) %&gt;%
+  set_names(names(.) %&gt;% str_replace_all(&quot;\\.&quot;, &quot;_&quot;))</code></pre>
+<pre class="r"><code>sales_by_state_tbl &lt;- bike_state_orderlines_wrangled_tbl %&gt;%
+  select(state, total_price) %&gt;%
+  group_by(state) %&gt;% 
+  summarize(sales = sum(total_price)) %&gt;%
+  mutate(sales_text = scales::dollar(sales, big.mark = &quot;.&quot;, 
+                                     decimal.mark = &quot;,&quot;, 
+                                     prefix = &quot;&quot;, 
+                                     suffix = &quot; €&quot;))</code></pre>
+<pre class="r"><code>sales_by_state_tbl</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    state                            sales sales_text  
+##    &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;       
+##  1 Baden-Württemberg              6521090 6.521.090 € 
+##  2 Bavaria                        6742819 6.742.819 € 
+##  3 Berlin                         1128433 1.128.433 € 
+##  4 Bremen                        10653499 10.653.499 €
+##  5 Hamburg                        3874756 3.874.756 € 
+##  6 Hesse                          1558901 1.558.901 € 
+##  7 Lower Saxony                   4107115 4.107.115 € 
+##  8 Mecklenburg-Western Pomerania   618974 618.974 €   
+##  9 North Rhine-Westphalia        21200613 21.200.613 €
+## 10 Saxony                         2230245 2.230.245 € 
+## 11 Saxony-Anhalt                   569614 569.614 €   
+## 12 Schleswig-Holstein             3224749 3.224.749 €</code></pre>
+</div>
+<div id="step-2---visualize-2" class="section level1">
+<h1><span class="header-section-number">21</span> Step 2 - Visualize</h1>
+<pre class="r"><code>sales_by_state_tbl %&gt;%
+  ggplot(aes(x = state, y = sales)) +
+  geom_col(fill = &quot;#2DC6D6&quot;) + 
+  geom_label(aes(label = sales_text)) + 
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title    = &quot;Revenue by State&quot;,
+    subtitle = &quot;&quot;,
+    x = &quot;State&quot;,
+    y = &quot;Revenue&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="analyze-the-sales-by-location-and-year--" class="section level1">
+<h1><span class="header-section-number">22</span> Analyze the sales by location and year —-</h1>
+</div>
+<div id="step-1---manipulate-3" class="section level1">
+<h1><span class="header-section-number">23</span> Step 1 - Manipulate</h1>
+<pre class="r"><code>sales_by_year_state_tbl &lt;- bike_state_orderlines_wrangled_tbl %&gt;%
+  select(order_date, total_price, state) %&gt;%
+  mutate(year = year(order_date)) %&gt;%
+  group_by(year, state) %&gt;%
+  summarise(sales = sum(total_price)) %&gt;%
+  ungroup() %&gt;%
+  mutate(sales_text = scales::dollar(sales, big.mark = &quot;.&quot;, 
+                                     decimal.mark = &quot;,&quot;, 
+                                     prefix = &quot;&quot;, 
+                                     suffix = &quot; €&quot;))</code></pre>
+</div>
+<div id="step-2---visualize-3" class="section level1">
+<h1><span class="header-section-number">24</span> Step 2 - Visualize</h1>
+</div>
+<div id="baden-württemberg" class="section level1">
+<h1><span class="header-section-number">25</span> Baden-Württemberg</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Baden-Württemberg&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Baden-Württemberg by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="bavaria" class="section level1">
+<h1><span class="header-section-number">26</span> Bavaria</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Bavaria&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Bavaria by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+<div id="berlin" class="section level1">
+<h1><span class="header-section-number">27</span> Berlin</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Berlin&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Berlin by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="bremen" class="section level1">
+<h1><span class="header-section-number">28</span> Bremen</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Bremen&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Bremen by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="hamburg" class="section level1">
+<h1><span class="header-section-number">29</span> Hamburg</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Hamburg&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Hamburg by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="hesse" class="section level1">
+<h1><span class="header-section-number">30</span> Hesse</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Hesse&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Hesse by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="lower-saxony" class="section level1">
+<h1><span class="header-section-number">31</span> Lower Saxony</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Lower Saxony&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Lower Saxony by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="mecklenburg-western-pomerania" class="section level1">
+<h1><span class="header-section-number">32</span> Mecklenburg-Western Pomerania</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Mecklenburg-Western Pomerania&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Mecklenburg-Western Pomerania by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="north-rhine-westphalia" class="section level1">
+<h1><span class="header-section-number">33</span> North Rhine-Westphalia</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;North Rhine-Westphalia&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in North Rhine-Westphalia by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="saxony" class="section level1">
+<h1><span class="header-section-number">34</span> Saxony</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Saxony&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Saxony by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="saxony-anhalt" class="section level1">
+<h1><span class="header-section-number">35</span> Saxony-Anhalt</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Saxony-Anhalt&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Saxony-Anhalt by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+<div id="schleswig-holstein" class="section level1">
+<h1><span class="header-section-number">36</span> Schleswig-Holstein</h1>
+<pre class="r"><code>sales_by_year_state_tbl %&gt;%
+  ggplot(aes(x = &quot;Schleswig-Holstein&quot;, y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = &quot;.&quot;, 
+                                                    decimal.mark = &quot;,&quot;, 
+                                                    prefix = &quot;&quot;, 
+                                                    suffix = &quot; €&quot;)) +
+  labs(
+    title = &quot;Revenue in Schleswig-Holstein by year&quot;,
+    subtitle = &quot;&quot;,
+    fill = &quot;Main category&quot;
+  )</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Notice that whatever you define as a top level header, automatically gets put into the table of contents bar on the left.</p>
+<div id="second-level-header" class="section level2">
+<h2><span class="header-section-number">36.1</span> Second level header</h2>
+<p>You can add more headers by adding more hashtags. These won’t be put into the table of contents</p>
+<div id="third-level-header" class="section level3">
+<h3><span class="header-section-number">36.1.1</span> third level header</h3>
+<p>Here’s an even lower level header</p>
+</div>
+</div>
+</div>
+<div id="my-second-post-note-the-order" class="section level1">
+<h1><span class="header-section-number">37</span> My second post (note the order)</h1>
+<p>Last compiled: 2020-11-25</p>
+<p>I’m writing this tutorial going from the top down. And, this is how it will be printed. So, notice the second post is second in the list. If you want your most recent post to be at the top, then make a new post starting at the top. If you want the oldest first, do, then keep adding to the bottom</p>
+</div>
+<div id="adding-r-stuff" class="section level1">
+<h1><span class="header-section-number">38</span> Adding R stuff</h1>
+<p>So far this is just a blog where you can write in plain text and serve your writing to a webpage. One of the main purposes of this lab journal is to record your progress learning R. The reason I am asking you to use this process is because you can both make a website, and a lab journal, and learn R all in R-studio. This makes everything really convenient and in the same place.</p>
+<p>So, let’s say you are learning how to make a histogram in R. For example, maybe you want to sample 100 numbers from a normal distribution with mean = 0, and standard deviation = 1, and then you want to plot a histogram. You can do this right here by using an r code block, like this:</p>
+<pre class="r"><code>samples &lt;- rnorm(100, mean=0, sd=1)
+hist(samples)</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>When you knit this R Markdown document, you will see that the histogram is printed to the page, along with the R code. This document can be set up to hide the R code in the webpage, just delete the comment (hashtag) from the cold folding option in the yaml header up top. For purposes of letting yourself see the code, and me see the code, best to keep it the way that it is. You’ll learn that all of these things and more can be customized in each R code block.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

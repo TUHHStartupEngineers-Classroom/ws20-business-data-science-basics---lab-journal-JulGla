@@ -16,13 +16,389 @@ output:
 knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 ```
 
-**IMPORTANT:** You can delete everything in here and start fresh. You might want to start by not deleting anything above this line until you know what that stuff is doing.
-
-This is an `.Rmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \# in front of your text, it will create a top level-header.
 
 # My first post
 
 Last compiled: `r Sys.Date()`
+
+# Data Science at TUHH ------------------------------------------------------
+# SALES ANALYSIS ----
+
+# 1.0 Load libraries ----
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(lubridate)
+```
+
+# 2.0 Importing Files ----
+```{r}
+bikes_tbl      <- read_excel(path = "00_data/01_bike_sales/01_raw_data/bikes.xlsx")
+orderlines_tbl <- read_excel("00_data/01_bike_sales/01_raw_data/orderlines.xlsx")
+bikeshops_tbl  <- read_excel("00_data/01_bike_sales/01_raw_data/bikeshops.xlsx")
+```
+
+# 4.0 Joining Data ----
+```{r}
+bike_orderlines_joined_tbl <- orderlines_tbl %>%
+  left_join(bikes_tbl, by = c("product.id" = "bike.id")) %>%
+  left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
+bike_orderlines_joined_tbl %>% glimpse()
+```
+
+
+# 5.0 Wrangling Data ----
+```{r}
+bike_orderlines_joined_tbl$category
+bike_orderlines_joined_tbl %>% 
+  select(category) %>%
+  filter(str_detect(category, "^Mountain")) %>% 
+  unique()
+
+bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
+  separate(col    = category,
+           into   = c("category.1", "category.2", "category.3"),
+           sep    = " - ") %>%
+  mutate(total.price = price * quantity) %>%
+  select(-...1, -gender) %>%
+  select(-ends_with(".id")) %>%
+  bind_cols(bike_orderlines_joined_tbl %>% select(order.id)) %>% 
+  select(order.id, contains("order"), contains("model"), contains("category"),
+         price, quantity, total.price,
+         everything()) %>%
+  rename(bikeshop = name) %>%
+  set_names(names(.) %>% str_replace_all("\\.", "_"))
+```
+
+
+# 6.0 Business Insights ----
+# 6.1 Sales by Year ----
+
+# Step 1 - Manipulate
+```{r}
+sales_by_year_tbl <- bike_orderlines_wrangled_tbl %>%
+  select(order_date, total_price) %>%
+  mutate(year = year(order_date)) %>%
+  group_by(year) %>% 
+  summarize(sales = sum(total_price)) %>%
+  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
+                                     decimal.mark = ",", 
+                                     prefix = "", 
+                                     suffix = " €"))
+
+sales_by_year_tbl
+```
+
+
+# Step 2 - Visualize
+sales_by_year_tbl %>%
+  ggplot(aes(x = year, y = sales)) +
+  geom_col(fill = "#2DC6D6") + 
+  geom_label(aes(label = sales_text)) + 
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title    = "Revenue by year",
+    subtitle = "Upward Trend",
+    x = "",
+    y = "Revenue"
+  )
+
+# 6.2 Sales by Year and Category 2 ----
+
+# Step 1 - Manipulate
+sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
+  select(order_date, total_price, category_1) %>%
+  mutate(year = year(order_date)) %>%
+  group_by(year, category_1) %>%
+  summarise(sales = sum(total_price)) %>%
+  ungroup() %>%
+  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
+                                     decimal.mark = ",", 
+                                     prefix = "", 
+                                     suffix = " €"))
+
+sales_by_year_cat_1_tbl 
+
+# Step 2 - Visualize
+sales_by_year_cat_1_tbl %>%
+  ggplot(aes(x = year, y = sales, fill = category_1)) +
+  geom_col() +
+  facet_wrap(~ category_1) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue by year and main category",
+    subtitle = "Each product category has an upward trend",
+    fill = "Main category"
+  )
+
+
+# 7.0 Writing Files ----
+
+# 7.1 Excel ----
+install.packages("writexl")
+library("writexl")
+bike_orderlines_wrangled_tbl %>%
+  write_xlsx("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx")
+
+# 7.2 CSV ----
+bike_orderlines_wrangled_tbl %>% 
+  write_csv("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.csv")
+
+# 7.3 RDS ----
+bike_orderlines_wrangled_tbl %>% 
+  write_rds("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.rds")
+
+# 8 Challenge ----
+# Step 1 - Manipulate
+bike_state_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
+  separate(col    = category,
+           into   = c("category.1", "category.2", "category.3"),
+           sep    = " - ") %>%
+  separate(col    = location,
+           into   = c("city", "state"),
+           sep    = ", ") %>%
+  mutate(total.price = price * quantity) %>%
+  select(-...1, -gender) %>%
+  select(-ends_with(".id")) %>%
+  bind_cols(bike_orderlines_joined_tbl %>% select(order.id)) %>% 
+  select(order.id, contains("order"), contains("model"), contains("category"),
+         price, quantity, total.price,
+         everything()) %>%
+  rename(bikeshop = name) %>%
+  set_names(names(.) %>% str_replace_all("\\.", "_"))
+
+sales_by_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
+  select(state, total_price) %>%
+  group_by(state) %>% 
+  summarize(sales = sum(total_price)) %>%
+  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
+                                     decimal.mark = ",", 
+                                     prefix = "", 
+                                     suffix = " €"))
+
+sales_by_state_tbl
+
+# Step 2 - Visualize
+sales_by_state_tbl %>%
+  ggplot(aes(x = state, y = sales)) +
+  geom_col(fill = "#2DC6D6") + 
+  geom_label(aes(label = sales_text)) + 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title    = "Revenue by State",
+    subtitle = "",
+    x = "State",
+    y = "Revenue"
+  )
+
+# Analyze the sales by location and year ----
+# Step 1 - Manipulate
+
+sales_by_year_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
+  select(order_date, total_price, state) %>%
+  mutate(year = year(order_date)) %>%
+  group_by(year, state) %>%
+  summarise(sales = sum(total_price)) %>%
+  ungroup() %>%
+  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
+                                     decimal.mark = ",", 
+                                     prefix = "", 
+                                     suffix = " €"))
+# Step 2 - Visualize
+
+# Baden-Württemberg
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Baden-Württemberg", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Baden-Württemberg by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Bavaria
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Bavaria", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Bavaria by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Berlin
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Berlin", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Berlin by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Bremen
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Bremen", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Bremen by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Hamburg
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Hamburg", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Hamburg by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Hesse 
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Hesse", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Hesse by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Lower Saxony
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Lower Saxony", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Lower Saxony by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Mecklenburg-Western Pomerania 
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Mecklenburg-Western Pomerania", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Mecklenburg-Western Pomerania by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# North Rhine-Westphalia 
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "North Rhine-Westphalia", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in North Rhine-Westphalia by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Saxony 
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Saxony", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Saxony by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Saxony-Anhalt
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Saxony-Anhalt", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Saxony-Anhalt by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
+# Schleswig-Holstein
+sales_by_year_state_tbl %>%
+  ggplot(aes(x = "Schleswig-Holstein", y = sales, fill = year)) +
+  geom_col() +
+  facet_wrap(~ year) +
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue in Schleswig-Holstein by year",
+    subtitle = "",
+    fill = "Main category"
+  )
+
 
 Notice that whatever you define as a top level header, automatically gets put into the table of contents bar on the left. 
 

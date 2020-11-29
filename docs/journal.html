@@ -412,7 +412,7 @@ div.tocify {
 
 <div id="my-first-post" class="section level1">
 <h1><span class="header-section-number">1</span> My first post</h1>
-<p>Last compiled: 2020-11-26</p>
+<p>Last compiled: 2020-11-29</p>
 </div>
 <div id="data-science-at-tuhh" class="section level1">
 <h1><span class="header-section-number">2</span> Data Science at TUHH ——————————————————</h1>
@@ -425,7 +425,15 @@ div.tocify {
 <pre class="r"><code>library(tidyverse)
 library(readxl)
 library(lubridate)
-library(writexl)</code></pre>
+library(writexl)
+library(rvest)     # HTML Hacking &amp; Web Scraping
+library(xopen)     # Quickly opening URLs
+library(jsonlite)  # converts JSON files to R objects
+library(glue)      # concatenate strings
+library(stringi)   # character string/text processing
+library(httr)
+library(glue)
+library(jsonlite)</code></pre>
 </div>
 <div id="importing-files--" class="section level1">
 <h1><span class="header-section-number">5</span> 2.0 Importing Files —-</h1>
@@ -831,29 +839,137 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
     fill = &quot;Main category&quot;
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<p>Notice that whatever you define as a top level header, automatically gets put into the table of contents bar on the left.</p>
-<div id="second-level-header" class="section level2">
-<h2><span class="header-section-number">36.1</span> Second level header</h2>
-<p>You can add more headers by adding more hashtags. These won’t be put into the table of contents</p>
-<div id="third-level-header" class="section level3">
-<h3><span class="header-section-number">36.1.1</span> third level header</h3>
-<p>Here’s an even lower level header</p>
 </div>
+<div id="weather-data-for-hamburg" class="section level1">
+<h1><span class="header-section-number">37</span> Weather Data for Hamburg</h1>
+<pre class="r"><code>hamburg_weather &lt;- GET(&quot;http://api.openweathermap.org/data/2.5/weather?q=Hamburg,DE&amp;APPID=fc851c17b49d940f2315af23e7efb62d&quot;)
+hamburg_weather</code></pre>
+<pre><code>## Response [http://api.openweathermap.org/data/2.5/weather?q=Hamburg,DE&amp;APPID=fc851c17b49d940f2315af23e7efb62d]
+##   Date: 2020-11-29 17:11
+##   Status: 200
+##   Content-Type: application/json; charset=utf-8
+##   Size: 465 B</code></pre>
+<pre class="r"><code>rawToChar(hamburg_weather$content)</code></pre>
+<pre><code>## [1] &quot;{\&quot;coord\&quot;:{\&quot;lon\&quot;:10,\&quot;lat\&quot;:53.55},\&quot;weather\&quot;:[{\&quot;id\&quot;:803,\&quot;main\&quot;:\&quot;Clouds\&quot;,\&quot;description\&quot;:\&quot;broken clouds\&quot;,\&quot;icon\&quot;:\&quot;04n\&quot;}],\&quot;base\&quot;:\&quot;stations\&quot;,\&quot;main\&quot;:{\&quot;temp\&quot;:276.7,\&quot;feels_like\&quot;:273.11,\&quot;temp_min\&quot;:276.15,\&quot;temp_max\&quot;:277.15,\&quot;pressure\&quot;:1027,\&quot;humidity\&quot;:86},\&quot;visibility\&quot;:10000,\&quot;wind\&quot;:{\&quot;speed\&quot;:2.6,\&quot;deg\&quot;:310},\&quot;clouds\&quot;:{\&quot;all\&quot;:75},\&quot;dt\&quot;:1606669618,\&quot;sys\&quot;:{\&quot;type\&quot;:1,\&quot;id\&quot;:1263,\&quot;country\&quot;:\&quot;DE\&quot;,\&quot;sunrise\&quot;:1606633851,\&quot;sunset\&quot;:1606662384},\&quot;timezone\&quot;:3600,\&quot;id\&quot;:2911298,\&quot;name\&quot;:\&quot;Hamburg\&quot;,\&quot;cod\&quot;:200}&quot;</code></pre>
+<pre class="r"><code>hamburg_weather %&gt;% 
+  .$content %&gt;% 
+  rawToChar() %&gt;% 
+  fromJSON()</code></pre>
+<pre><code>## $coord
+## $coord$lon
+## [1] 10
+## 
+## $coord$lat
+## [1] 53.55
+## 
+## 
+## $weather
+##    id   main   description icon
+## 1 803 Clouds broken clouds  04n
+## 
+## $base
+## [1] &quot;stations&quot;
+## 
+## $main
+## $main$temp
+## [1] 276.7
+## 
+## $main$feels_like
+## [1] 273.11
+## 
+## $main$temp_min
+## [1] 276.15
+## 
+## $main$temp_max
+## [1] 277.15
+## 
+## $main$pressure
+## [1] 1027
+## 
+## $main$humidity
+## [1] 86
+## 
+## 
+## $visibility
+## [1] 10000
+## 
+## $wind
+## $wind$speed
+## [1] 2.6
+## 
+## $wind$deg
+## [1] 310
+## 
+## 
+## $clouds
+## $clouds$all
+## [1] 75
+## 
+## 
+## $dt
+## [1] 1606669618
+## 
+## $sys
+## $sys$type
+## [1] 1
+## 
+## $sys$id
+## [1] 1263
+## 
+## $sys$country
+## [1] &quot;DE&quot;
+## 
+## $sys$sunrise
+## [1] 1606633851
+## 
+## $sys$sunset
+## [1] 1606662384
+## 
+## 
+## $timezone
+## [1] 3600
+## 
+## $id
+## [1] 2911298
+## 
+## $name
+## [1] &quot;Hamburg&quot;
+## 
+## $cod
+## [1] 200</code></pre>
 </div>
-</div>
-<div id="my-second-post-note-the-order" class="section level1">
-<h1><span class="header-section-number">37</span> My second post (note the order)</h1>
-<p>Last compiled: 2020-11-26</p>
-<p>I’m writing this tutorial going from the top down. And, this is how it will be printed. So, notice the second post is second in the list. If you want your most recent post to be at the top, then make a new post starting at the top. If you want the oldest first, do, then keep adding to the bottom</p>
-</div>
-<div id="adding-r-stuff" class="section level1">
-<h1><span class="header-section-number">38</span> Adding R stuff</h1>
-<p>So far this is just a blog where you can write in plain text and serve your writing to a webpage. One of the main purposes of this lab journal is to record your progress learning R. The reason I am asking you to use this process is because you can both make a website, and a lab journal, and learn R all in R-studio. This makes everything really convenient and in the same place.</p>
-<p>So, let’s say you are learning how to make a histogram in R. For example, maybe you want to sample 100 numbers from a normal distribution with mean = 0, and standard deviation = 1, and then you want to plot a histogram. You can do this right here by using an r code block, like this:</p>
-<pre class="r"><code>samples &lt;- rnorm(100, mean=0, sd=1)
-hist(samples)</code></pre>
-<p><img src="journal_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
-<p>When you knit this R Markdown document, you will see that the histogram is printed to the page, along with the R code. This document can be set up to hide the R code in the webpage, just delete the comment (hashtag) from the cold folding option in the yaml header up top. For purposes of letting yourself see the code, and me see the code, best to keep it the way that it is. You’ll learn that all of these things and more can be customized in each R code block.</p>
+<div id="road-bikes-from-rose-with-prices" class="section level1">
+<h1><span class="header-section-number">38</span> Road bikes from Rose with prices</h1>
+<pre class="r"><code>url_rennrad          &lt;- &quot;https://www.rosebikes.de/fahrräder/rennrad&quot;
+html_rennrad         &lt;- read_html(url_rennrad)
+rennrad_tbl &lt;- html_rennrad %&gt;%
+  html_nodes(css = &quot;.catalog-category-bikes__title&quot;) %&gt;%
+  html_text() %&gt;%
+  enframe(name = &quot;position&quot;, value = &quot;family_class&quot;) %&gt;%
+  mutate(
+    family_class = str_glue(&quot;#{family_class}&quot;)
+  )
+rennrad_prices_tbl &lt;- html_rennrad %&gt;%
+  html_nodes(css = &quot;.catalog-category-bikes__price-title&quot;) %&gt;%
+  html_text() %&gt;%
+  enframe(name = &quot;position&quot;, value = &quot;price&quot;) %&gt;%
+  mutate(
+    price = str_glue(&quot;#{price}&quot;)
+  )
+
+bind_cols(rennrad_tbl, rennrad_prices_tbl)</code></pre>
+<pre><code>## # A tibble: 9 x 4
+##   position...1 family_class                position...3 price               
+##          &lt;int&gt; &lt;glue&gt;                             &lt;int&gt; &lt;glue&gt;              
+## 1            1 &quot;#\n\nPRO SL DISC\n\n&quot;                 1 &quot;#\nab 1.599,00 €\n&quot;
+## 2            2 &quot;#\n\nPRO SL\n\n&quot;                      2 &quot;#\nab 1.199,00 €\n&quot;
+## 3            3 &quot;#\n\nREVEAL FOUR DISC\n\n&quot;            3 &quot;#\nab 2.499,00 €\n&quot;
+## 4            4 &quot;#\n\nREVEAL FOUR\n\n&quot;                 4 &quot;#\nab 2.099,00 €\n&quot;
+## 5            5 &quot;#\n\nREVEAL SIX DISC\n\n&quot;             5 &quot;#\nab 3.499,00 €\n&quot;
+## 6            6 &quot;#\n\nX-LITE FOUR DISC\n\n&quot;            6 &quot;#\nab 2.699,00 €\n&quot;
+## 7            7 &quot;#\n\nX-LITE FOUR\n\n&quot;                 7 &quot;#\nab 2.199,00 €\n&quot;
+## 8            8 &quot;#\n\n X-LITE SIX DISC\n\n&quot;            8 &quot;#\nab 3.899,00 €\n&quot;
+## 9            9 &quot;#\n\nX-LITE SIX\n\n&quot;                  9 &quot;#\nab 3.499,00 €\n&quot;</code></pre>
 </div>
 
 

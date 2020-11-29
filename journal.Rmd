@@ -31,6 +31,14 @@ library(tidyverse)
 library(readxl)
 library(lubridate)
 library(writexl)
+library(rvest)     # HTML Hacking & Web Scraping
+library(xopen)     # Quickly opening URLs
+library(jsonlite)  # converts JSON files to R objects
+library(glue)      # concatenate strings
+library(stringi)   # character string/text processing
+library(httr)
+library(glue)
+library(jsonlite)
 ```
 
 # 2.0 Importing Files ----

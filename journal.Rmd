@@ -444,32 +444,38 @@ sales_by_year_state_tbl %>%
 ```
 
 
-
-Notice that whatever you define as a top level header, automatically gets put into the table of contents bar on the left. 
-
-## Second level header
-
-You can add more headers by adding more hashtags. These won't be put into the table of contents
-
-### third level header
-
-Here's an even lower level header
-
-# My second post (note the order)
-
-Last compiled: `r Sys.Date()`
-
-I'm writing this tutorial going from the top down. And, this is how it will be printed. So, notice the second post is second in the list. If you want your most recent post to be at the top, then make a new post starting at the top. If you want the oldest first, do, then keep adding to the bottom
-
-# Adding R stuff
-
-So far this is just a blog where you can write in plain text and serve your writing to a webpage. One of the main purposes of this lab journal is to record your progress learning R. The reason I am asking you to use this process is because you can both make a website, and a lab journal, and learn R all in R-studio. This makes everything really convenient and in the same place. 
-
-So, let's say you are learning how to make a histogram in R. For example, maybe you want to sample 100 numbers from a normal distribution with mean = 0, and standard deviation = 1, and then you want to plot a histogram. You can do this right here by using an r code block, like this:
-
+# Weather Data for Hamburg
 ```{r}
-samples <- rnorm(100, mean=0, sd=1)
-hist(samples)
+hamburg_weather <- GET("http://api.openweathermap.org/data/2.5/weather?q=Hamburg,DE&APPID=fc851c17b49d940f2315af23e7efb62d")
+hamburg_weather
+rawToChar(hamburg_weather$content)
+hamburg_weather %>% 
+  .$content %>% 
+  rawToChar() %>% 
+  fromJSON()
 ```
 
-When you knit this R Markdown document, you will see that the histogram is printed to the page, along with the R code. This document can be set up to hide the R code in the webpage, just delete the comment (hashtag) from the cold folding option in the yaml header up top. For purposes of letting yourself see the code, and me see the code, best to keep it the way that it is. You'll learn that all of these things and more can be customized in each R code block.
+
+# Road bikes from Rose with prices
+
+```{r}
+url_rennrad          <- "https://www.rosebikes.de/fahrräder/rennrad"
+html_rennrad         <- read_html(url_rennrad)
+rennrad_tbl <- html_rennrad %>%
+  html_nodes(css = ".catalog-category-bikes__title") %>%
+  html_text() %>%
+  enframe(name = "position", value = "family_class") %>%
+  mutate(
+    family_class = str_glue("#{family_class}")
+  )
+rennrad_prices_tbl <- html_rennrad %>%
+  html_nodes(css = ".catalog-category-bikes__price-title") %>%
+  html_text() %>%
+  enframe(name = "position", value = "price") %>%
+  mutate(
+    price = str_glue("#{price}")
+  )
+
+bind_cols(rennrad_tbl, rennrad_prices_tbl)
+```
+

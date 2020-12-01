@@ -412,7 +412,7 @@ div.tocify {
 
 <div id="my-first-post" class="section level1">
 <h1><span class="header-section-number">1</span> My first post</h1>
-<p>Last compiled: 2020-11-29</p>
+<p>Last compiled: 2020-12-01</p>
 </div>
 <div id="data-science-at-tuhh" class="section level1">
 <h1><span class="header-section-number">2</span> Data Science at TUHH ——————————————————</h1>
@@ -970,6 +970,242 @@ bind_cols(rennrad_tbl, rennrad_prices_tbl)</code></pre>
 ## 7            7 &quot;#\n\nX-LITE FOUR\n\n&quot;                 7 &quot;#\nab 2.199,00 €\n&quot;
 ## 8            8 &quot;#\n\n X-LITE SIX DISC\n\n&quot;            8 &quot;#\nab 3.899,00 €\n&quot;
 ## 9            9 &quot;#\n\nX-LITE SIX\n\n&quot;                  9 &quot;#\nab 3.499,00 €\n&quot;</code></pre>
+</div>
+<div id="data-wrangling" class="section level1">
+<h1><span class="header-section-number">39</span> Data Wrangling</h1>
+<pre class="r"><code>library(vroom)
+library(tidyverse)
+library(data.table)
+library(dplyr)
+library(tictoc)
+
+col_types &lt;- list(
+  id = col_character(),
+  type = col_character(),
+  number = col_character(),
+  country = col_character(),
+  date = col_date(&quot;%Y-%m-%d&quot;),
+  abstract = col_character(),
+  title = col_character(),
+  kind = col_character(),
+  num_claims = col_double(),
+  filename = col_character(),
+  withdrawn = col_double()
+)
+
+patent_tbl &lt;- vroom(
+  file       = &quot;patent.tsv&quot;, 
+  delim      = &quot;\t&quot;, 
+  col_types  = col_types,
+  na         = c(&quot;&quot;, &quot;NA&quot;, &quot;NULL&quot;)
+)
+
+class(patent_tbl)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>setDT(patent_tbl)
+class(patent_tbl)</code></pre>
+<pre><code>## [1] &quot;data.table&quot; &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>col_types &lt;- list(
+  id = col_character(),
+  type = col_character(),
+  number = col_character(),
+  country = col_character(),
+  date = col_date(&quot;%Y-%m-%d&quot;),
+  abstract = col_character(),
+  title = col_character(),
+  kind = col_character(),
+  num_claims = col_double(),
+  filename = col_character(),
+  withdrawn = col_double()
+)
+
+assignee_tbl &lt;- vroom(
+  file       = &quot;assignee.tsv&quot;, 
+  delim      = &quot;\t&quot;, 
+  col_types  = col_types,
+  na         = c(&quot;&quot;, &quot;NA&quot;, &quot;NULL&quot;)
+)
+
+class(assignee_tbl)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>setDT(assignee_tbl)
+class(assignee_tbl)</code></pre>
+<pre><code>## [1] &quot;data.table&quot; &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>col_types &lt;- list(
+  id = col_character(),
+  type = col_character(),
+  number = col_character(),
+  country = col_character(),
+  date = col_date(&quot;%Y-%m-%d&quot;),
+  abstract = col_character(),
+  title = col_character(),
+  kind = col_character(),
+  num_claims = col_double(),
+  filename = col_character(),
+  withdrawn = col_double()
+)
+patent_assignee_tbl &lt;- vroom(
+  file       = &quot;patent_assignee.tsv&quot;, 
+  delim      = &quot;\t&quot;, 
+  col_types  = col_types,
+  na         = c(&quot;&quot;, &quot;NA&quot;, &quot;NULL&quot;)
+)
+
+class(patent_assignee_tbl)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>setDT(patent_assignee_tbl)
+class(patent_assignee_tbl)</code></pre>
+<pre><code>## [1] &quot;data.table&quot; &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>col_types &lt;- list(
+  id = col_character(),
+  type = col_character(),
+  number = col_character(),
+  country = col_character(),
+  date = col_date(&quot;%Y-%m-%d&quot;),
+  abstract = col_character(),
+  title = col_character(),
+  kind = col_character(),
+  num_claims = col_double(),
+  filename = col_character(),
+  withdrawn = col_double()
+)
+
+uspc_tbl &lt;- vroom(
+  file       = &quot;uspc.tsv&quot;, 
+  delim      = &quot;\t&quot;, 
+  col_types  = col_types,
+  na         = c(&quot;&quot;, &quot;NA&quot;, &quot;NULL&quot;)
+)</code></pre>
+<div id="question-1" class="section level2">
+<h2><span class="header-section-number">39.1</span> Question 1</h2>
+<div id="patent-dominance-what-us-company-corporation-has-the-most-patents-list-the-10-us-companies-with-the-most-assignedgranted-patents-in-2014." class="section level3">
+<h3><span class="header-section-number">39.1.1</span> Patent Dominance: What US company / corporation has the most patents? List the 10 US companies with the most assigned/granted patents in 2014.</h3>
+<pre class="r"><code>setnames(assignee_tbl, &quot;id&quot;, &quot;assignee_id&quot;)
+
+combined_data &lt;- merge(x = patent_assignee_tbl, y = assignee_tbl, 
+                       by    = &quot;assignee_id&quot;, 
+                       all.x = TRUE, 
+                       all.y = FALSE)
+
+combined_data_us &lt;- combined_data %&gt;%
+  filter(type == &quot;2&quot;)
+
+combined_data_us %&gt;%
+  group_by(organization) %&gt;%
+  summarise(
+    count = n(),
+  ) %&gt;%
+  ungroup() %&gt;%
+  arrange(desc(count)) %&gt;% 
+  head(10)</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    organization                                count
+##    &lt;chr&gt;                                       &lt;int&gt;
+##  1 International Business Machines Corporation  7547
+##  2 Microsoft Corporation                        3165
+##  3 Google Inc.                                  2668
+##  4 QUALCOMM Incorporated                        2597
+##  5 Apple Inc.                                   2201
+##  6 General Electric Company                     1873
+##  7 Hewlett-Packard Development Company, L.P.    1638
+##  8 AT&amp;T INTELLECTUAL PROPERTY I, L.P.           1625
+##  9 Intel Corporation                            1616
+## 10 GM Global Technology Operations LLC          1533</code></pre>
+</div>
+</div>
+<div id="question-2" class="section level2">
+<h2><span class="header-section-number">39.2</span> Question 2</h2>
+<div id="what-us-company-had-the-most-patents-granted-in-april-2014" class="section level3">
+<h3><span class="header-section-number">39.2.1</span> What US company had the most patents granted in April 2014?</h3>
+<pre class="r"><code>setnames(patent_tbl, &quot;id&quot;, &quot;patent_id&quot;)
+
+combined_data_us_date &lt;- merge(x = combined_data_us, y = patent_tbl, 
+                       by    = &quot;patent_id&quot;, 
+                       all.x = TRUE, 
+                       all.y = FALSE)
+
+combined_data_us_date$date &lt;- as.Date(combined_data_us_date$date, format= &quot;%Y-%m-%d&quot;)
+
+combined_data_us_april &lt;- subset(combined_data_us_date, date&gt; &quot;2014-04-01&quot; &amp; date &lt; &quot;2014-04-30&quot;)
+
+combined_data_us_april %&gt;%
+  group_by(organization) %&gt;%
+  summarise(
+    count = n(),
+  ) %&gt;%
+  ungroup() %&gt;%
+  arrange(desc(count)) %&gt;% 
+  head(10)</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    organization                                count
+##    &lt;chr&gt;                                       &lt;int&gt;
+##  1 International Business Machines Corporation   409
+##  2 Microsoft Corporation                         269
+##  3 Google Inc.                                   213
+##  4 QUALCOMM Incorporated                         196
+##  5 Apple Inc.                                    185
+##  6 General Electric Company                      155
+##  7 AT&amp;T INTELLECTUAL PROPERTY I, L.P.            141
+##  8 GM Global Technology Operations LLC           120
+##  9 Hewlett-Packard Development Company, L.P.     116
+## 10 Intel Corporation                             112</code></pre>
+</div>
+</div>
+<div id="question-3" class="section level2">
+<h2><span class="header-section-number">39.3</span> Question 3</h2>
+<pre class="r"><code>combined_data_3 &lt;- merge(x = patent_assignee_tbl, y = assignee_tbl, 
+                               by    = &quot;assignee_id&quot;, 
+                               all.x = TRUE, 
+                               all.y = FALSE)
+
+combined_data_3_uspc &lt;- merge(x = uspc_tbl, y = combined_data_3, 
+                         by    = &quot;patent_id&quot;, 
+                         all.x = TRUE, 
+                         all.y = FALSE)</code></pre>
+<div id="top-5-uspto-main-classes" class="section level3">
+<h3><span class="header-section-number">39.3.1</span> Top 5 USPTO main classes</h3>
+<pre class="r"><code>combined_data_3_uspc %&gt;%
+  group_by(mainclass_id) %&gt;%
+  summarise(
+    count = n(),
+  ) %&gt;%
+  ungroup() %&gt;%
+  arrange(desc(count)) %&gt;% 
+  head(5)</code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   mainclass_id count
+##          &lt;dbl&gt; &lt;int&gt;
+## 1          257 42003
+## 2          455 30177
+## 3          370 25885
+## 4          438 20607
+## 5          709 18754</code></pre>
+</div>
+<div id="top-10-companies-worldwide-with-most-patents" class="section level3">
+<h3><span class="header-section-number">39.3.2</span> Top 10 companies worldwide with most patents</h3>
+<pre class="r"><code>combined_data_3 %&gt;%
+  group_by(organization) %&gt;%
+  summarise(
+    count = n(),
+  ) %&gt;%
+  ungroup() %&gt;%
+  arrange(desc(count)) %&gt;% 
+  head(10)</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    organization                                count
+##    &lt;chr&gt;                                       &lt;int&gt;
+##  1 International Business Machines Corporation  7547
+##  2 Samsung Electronics Co., Ltd.                5835
+##  3 Canon Kabushiki Kaisha                       4099
+##  4 Sony Corporation                             3326
+##  5 Microsoft Corporation                        3165
+##  6 Google Inc.                                  2668
+##  7 Kabushiki Kaisha Toshiba                     2656
+##  8 QUALCOMM Incorporated                        2597
+##  9 LG Electronics Inc.                          2459
+## 10 &lt;NA&gt;                                         2377</code></pre>
+</div>
+</div>
 </div>
 
 

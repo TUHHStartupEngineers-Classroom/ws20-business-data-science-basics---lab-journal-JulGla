@@ -410,18 +410,14 @@ div.tocify {
 </div>
 
 
-<div id="my-first-post" class="section level1">
-<h1><span class="header-section-number">1</span> My first post</h1>
-<p>Last compiled: 2020-12-01</p>
-</div>
+<p>Last compiled: 2020-12-04</p>
 <div id="data-science-at-tuhh" class="section level1">
-<h1><span class="header-section-number">2</span> Data Science at TUHH ——————————————————</h1>
+<h1><span class="header-section-number">1</span> Data Science at TUHH ——————————————————</h1>
 </div>
 <div id="sales-analysis--" class="section level1">
-<h1><span class="header-section-number">3</span> SALES ANALYSIS —-</h1>
-</div>
-<div id="load-libraries--" class="section level1">
-<h1><span class="header-section-number">4</span> 1.0 Load libraries —-</h1>
+<h1><span class="header-section-number">2</span> SALES ANALYSIS —-</h1>
+<div id="load-libraries--" class="section level2">
+<h2><span class="header-section-number">2.1</span> 1.0 Load libraries —-</h2>
 <pre class="r"><code>library(tidyverse)
 library(readxl)
 library(lubridate)
@@ -435,20 +431,20 @@ library(httr)
 library(glue)
 library(jsonlite)</code></pre>
 </div>
-<div id="importing-files--" class="section level1">
-<h1><span class="header-section-number">5</span> 2.0 Importing Files —-</h1>
+<div id="importing-files--" class="section level2">
+<h2><span class="header-section-number">2.2</span> 2.0 Importing Files —-</h2>
 <pre class="r"><code>bikes_tbl      &lt;- read_excel(path = &quot;00_data/01_bike_sales/01_raw_data/bikes.xlsx&quot;)
 orderlines_tbl &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/orderlines.xlsx&quot;)
 bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshops.xlsx&quot;)</code></pre>
 </div>
-<div id="joining-data--" class="section level1">
-<h1><span class="header-section-number">6</span> 4.0 Joining Data —-</h1>
+<div id="joining-data--" class="section level2">
+<h2><span class="header-section-number">2.3</span> 4.0 Joining Data —-</h2>
 <pre class="r"><code>bike_orderlines_joined_tbl &lt;- orderlines_tbl %&gt;%
   left_join(bikes_tbl, by = c(&quot;product.id&quot; = &quot;bike.id&quot;)) %&gt;%
   left_join(bikeshops_tbl, by = c(&quot;customer.id&quot; = &quot;bikeshop.id&quot;))</code></pre>
 </div>
-<div id="wrangling-data--" class="section level1">
-<h1><span class="header-section-number">7</span> 5.0 Wrangling Data —-</h1>
+<div id="wrangling-data--" class="section level2">
+<h2><span class="header-section-number">2.4</span> 5.0 Wrangling Data —-</h2>
 <pre class="r"><code>bike_orderlines_wrangled_tbl &lt;- bike_orderlines_joined_tbl %&gt;%
   separate(col    = category,
            into   = c(&quot;category.1&quot;, &quot;category.2&quot;, &quot;category.3&quot;),
@@ -463,14 +459,13 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   rename(bikeshop = name) %&gt;%
   set_names(names(.) %&gt;% str_replace_all(&quot;\\.&quot;, &quot;_&quot;))</code></pre>
 </div>
-<div id="business-insights--" class="section level1">
-<h1><span class="header-section-number">8</span> 6.0 Business Insights —-</h1>
+<div id="business-insights--" class="section level2">
+<h2><span class="header-section-number">2.5</span> 6.0 Business Insights —-</h2>
+<div id="sales-by-year--" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> 6.1 Sales by Year —-</h3>
 </div>
-<div id="sales-by-year--" class="section level1">
-<h1><span class="header-section-number">9</span> 6.1 Sales by Year —-</h1>
-</div>
-<div id="step-1---manipulate" class="section level1">
-<h1><span class="header-section-number">10</span> Step 1 - Manipulate</h1>
+<div id="step-1---manipulate" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> Step 1 - Manipulate</h3>
 <pre class="r"><code>sales_by_year_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
   select(order_date, total_price) %&gt;%
   mutate(year = year(order_date)) %&gt;%
@@ -481,8 +476,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
                                      prefix = &quot;&quot;, 
                                      suffix = &quot; €&quot;))</code></pre>
 </div>
-<div id="step-2---visualize" class="section level1">
-<h1><span class="header-section-number">11</span> Step 2 - Visualize</h1>
+<div id="step-2---visualize" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> Step 2 - Visualize</h3>
 <pre class="r"><code>sales_by_year_tbl %&gt;%
   ggplot(aes(x = year, y = sales)) +
   geom_col(fill = &quot;#2DC6D6&quot;) + 
@@ -500,11 +495,11 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-<div id="sales-by-year-and-category-2--" class="section level1">
-<h1><span class="header-section-number">12</span> 6.2 Sales by Year and Category 2 —-</h1>
 </div>
-<div id="step-1---manipulate-1" class="section level1">
-<h1><span class="header-section-number">13</span> Step 1 - Manipulate</h1>
+<div id="sales-by-year-and-category-2--" class="section level2">
+<h2><span class="header-section-number">2.6</span> 6.2 Sales by Year and Category 2 —-</h2>
+<div id="step-1---manipulate-1" class="section level3">
+<h3><span class="header-section-number">2.6.1</span> Step 1 - Manipulate</h3>
 <pre class="r"><code>sales_by_year_cat_1_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
   select(order_date, total_price, category_1) %&gt;%
   mutate(year = year(order_date)) %&gt;%
@@ -516,8 +511,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
                                      prefix = &quot;&quot;, 
                                      suffix = &quot; €&quot;))</code></pre>
 </div>
-<div id="step-2---visualize-1" class="section level1">
-<h1><span class="header-section-number">14</span> Step 2 - Visualize</h1>
+<div id="step-2---visualize-1" class="section level3">
+<h3><span class="header-section-number">2.6.2</span> Step 2 - Visualize</h3>
 <pre class="r"><code>sales_by_year_cat_1_tbl %&gt;%
   ggplot(aes(x = year, y = sales, fill = category_1)) +
   geom_col() +
@@ -533,29 +528,30 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
-<div id="writing-files--" class="section level1">
-<h1><span class="header-section-number">15</span> 7.0 Writing Files —-</h1>
 </div>
-<div id="excel--" class="section level1">
-<h1><span class="header-section-number">16</span> 7.1 Excel —-</h1>
+<div id="writing-files--" class="section level2">
+<h2><span class="header-section-number">2.7</span> 7.0 Writing Files —-</h2>
+<div id="excel--" class="section level3">
+<h3><span class="header-section-number">2.7.1</span> 7.1 Excel —-</h3>
 <pre class="r"><code>bike_orderlines_wrangled_tbl %&gt;%
   write_xlsx(&quot;00_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx&quot;)</code></pre>
 </div>
-<div id="csv--" class="section level1">
-<h1><span class="header-section-number">17</span> 7.2 CSV —-</h1>
+<div id="csv--" class="section level3">
+<h3><span class="header-section-number">2.7.2</span> 7.2 CSV —-</h3>
 <pre class="r"><code>bike_orderlines_wrangled_tbl %&gt;% 
   write_csv(&quot;00_data/01_bike_sales/02_wrangled_data/bike_orderlines.csv&quot;)</code></pre>
 </div>
-<div id="rds--" class="section level1">
-<h1><span class="header-section-number">18</span> 7.3 RDS —-</h1>
+<div id="rds--" class="section level3">
+<h3><span class="header-section-number">2.7.3</span> 7.3 RDS —-</h3>
 <pre class="r"><code>bike_orderlines_wrangled_tbl %&gt;% 
   write_rds(&quot;00_data/01_bike_sales/02_wrangled_data/bike_orderlines.rds&quot;)</code></pre>
 </div>
-<div id="challenge--" class="section level1">
-<h1><span class="header-section-number">19</span> 8 Challenge —-</h1>
 </div>
-<div id="step-1---manipulate-2" class="section level1">
-<h1><span class="header-section-number">20</span> Step 1 - Manipulate</h1>
+</div>
+<div id="challenge--" class="section level1">
+<h1><span class="header-section-number">3</span> Challenge —-</h1>
+<div id="step-1---manipulate-2" class="section level2">
+<h2><span class="header-section-number">3.1</span> Step 1 - Manipulate</h2>
 <pre class="r"><code>bike_state_orderlines_wrangled_tbl &lt;- bike_orderlines_joined_tbl %&gt;%
   separate(col    = category,
            into   = c(&quot;category.1&quot;, &quot;category.2&quot;, &quot;category.3&quot;),
@@ -597,8 +593,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
 ## 11 Saxony-Anhalt                   569614 569.614 €   
 ## 12 Schleswig-Holstein             3224749 3.224.749 €</code></pre>
 </div>
-<div id="step-2---visualize-2" class="section level1">
-<h1><span class="header-section-number">21</span> Step 2 - Visualize</h1>
+<div id="step-2---visualize-2" class="section level2">
+<h2><span class="header-section-number">3.2</span> Step 2 - Visualize</h2>
 <pre class="r"><code>sales_by_state_tbl %&gt;%
   ggplot(aes(x = state, y = sales)) +
   geom_col(fill = &quot;#2DC6D6&quot;) + 
@@ -617,11 +613,10 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
-<div id="analyze-the-sales-by-location-and-year--" class="section level1">
-<h1><span class="header-section-number">22</span> Analyze the sales by location and year —-</h1>
-</div>
-<div id="step-1---manipulate-3" class="section level1">
-<h1><span class="header-section-number">23</span> Step 1 - Manipulate</h1>
+<div id="analyze-the-sales-by-location-and-year--" class="section level2">
+<h2><span class="header-section-number">3.3</span> Analyze the sales by location and year —-</h2>
+<div id="step-1---manipulate-3" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Step 1 - Manipulate</h3>
 <pre class="r"><code>sales_by_year_state_tbl &lt;- bike_state_orderlines_wrangled_tbl %&gt;%
   select(order_date, total_price, state) %&gt;%
   mutate(year = year(order_date)) %&gt;%
@@ -633,11 +628,10 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
                                      prefix = &quot;&quot;, 
                                      suffix = &quot; €&quot;))</code></pre>
 </div>
-<div id="step-2---visualize-3" class="section level1">
-<h1><span class="header-section-number">24</span> Step 2 - Visualize</h1>
-</div>
-<div id="baden-württemberg" class="section level1">
-<h1><span class="header-section-number">25</span> Baden-Württemberg</h1>
+<div id="step-2---visualize-3" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Step 2 - Visualize</h3>
+<div id="baden-württemberg" class="section level4">
+<h4><span class="header-section-number">3.3.2.1</span> Baden-Württemberg</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Baden-Württemberg&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -653,8 +647,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
-<div id="bavaria" class="section level1">
-<h1><span class="header-section-number">26</span> Bavaria</h1>
+<div id="bavaria" class="section level4">
+<h4><span class="header-section-number">3.3.2.2</span> Bavaria</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Bavaria&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -670,8 +664,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
-<div id="berlin" class="section level1">
-<h1><span class="header-section-number">27</span> Berlin</h1>
+<div id="berlin" class="section level4">
+<h4><span class="header-section-number">3.3.2.3</span> Berlin</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Berlin&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -687,8 +681,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
-<div id="bremen" class="section level1">
-<h1><span class="header-section-number">28</span> Bremen</h1>
+<div id="bremen" class="section level4">
+<h4><span class="header-section-number">3.3.2.4</span> Bremen</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Bremen&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -704,8 +698,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
-<div id="hamburg" class="section level1">
-<h1><span class="header-section-number">29</span> Hamburg</h1>
+<div id="hamburg" class="section level4">
+<h4><span class="header-section-number">3.3.2.5</span> Hamburg</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Hamburg&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -721,8 +715,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
-<div id="hesse" class="section level1">
-<h1><span class="header-section-number">30</span> Hesse</h1>
+<div id="hesse" class="section level4">
+<h4><span class="header-section-number">3.3.2.6</span> Hesse</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Hesse&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -738,8 +732,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
-<div id="lower-saxony" class="section level1">
-<h1><span class="header-section-number">31</span> Lower Saxony</h1>
+<div id="lower-saxony" class="section level4">
+<h4><span class="header-section-number">3.3.2.7</span> Lower Saxony</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Lower Saxony&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -755,8 +749,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
-<div id="mecklenburg-western-pomerania" class="section level1">
-<h1><span class="header-section-number">32</span> Mecklenburg-Western Pomerania</h1>
+<div id="mecklenburg-western-pomerania" class="section level4">
+<h4><span class="header-section-number">3.3.2.8</span> Mecklenburg-Western Pomerania</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Mecklenburg-Western Pomerania&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -772,8 +766,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
-<div id="north-rhine-westphalia" class="section level1">
-<h1><span class="header-section-number">33</span> North Rhine-Westphalia</h1>
+<div id="north-rhine-westphalia" class="section level4">
+<h4><span class="header-section-number">3.3.2.9</span> North Rhine-Westphalia</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;North Rhine-Westphalia&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -789,8 +783,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
-<div id="saxony" class="section level1">
-<h1><span class="header-section-number">34</span> Saxony</h1>
+<div id="saxony" class="section level4">
+<h4><span class="header-section-number">3.3.2.10</span> Saxony</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Saxony&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -806,8 +800,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
-<div id="saxony-anhalt" class="section level1">
-<h1><span class="header-section-number">35</span> Saxony-Anhalt</h1>
+<div id="saxony-anhalt" class="section level4">
+<h4><span class="header-section-number">3.3.2.11</span> Saxony-Anhalt</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Saxony-Anhalt&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -823,8 +817,8 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 </div>
-<div id="schleswig-holstein" class="section level1">
-<h1><span class="header-section-number">36</span> Schleswig-Holstein</h1>
+<div id="schleswig-holstein" class="section level4">
+<h4><span class="header-section-number">3.3.2.12</span> Schleswig-Holstein</h4>
 <pre class="r"><code>sales_by_year_state_tbl %&gt;%
   ggplot(aes(x = &quot;Schleswig-Holstein&quot;, y = sales, fill = year)) +
   geom_col() +
@@ -840,8 +834,11 @@ bikeshops_tbl  &lt;- read_excel(&quot;00_data/01_bike_sales/01_raw_data/bikeshop
   )</code></pre>
 <p><img src="journal_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 </div>
+</div>
+</div>
+</div>
 <div id="weather-data-for-hamburg" class="section level1">
-<h1><span class="header-section-number">37</span> Weather Data for Hamburg</h1>
+<h1><span class="header-section-number">4</span> Weather Data for Hamburg</h1>
 <pre class="r"><code>hamburg_weather &lt;- GET(&quot;http://api.openweathermap.org/data/2.5/weather?q=Hamburg,DE&amp;APPID=fc851c17b49d940f2315af23e7efb62d&quot;)
 hamburg_weather</code></pre>
 <pre><code>## Response [http://api.openweathermap.org/data/2.5/weather?q=Hamburg,DE&amp;APPID=fc851c17b49d940f2315af23e7efb62d]
@@ -939,7 +936,7 @@ hamburg_weather</code></pre>
 ## [1] 200</code></pre>
 </div>
 <div id="road-bikes-from-rose-with-prices" class="section level1">
-<h1><span class="header-section-number">38</span> Road bikes from Rose with prices</h1>
+<h1><span class="header-section-number">5</span> Road bikes from Rose with prices</h1>
 <pre class="r"><code>url_rennrad          &lt;- &quot;https://www.rosebikes.de/fahrräder/rennrad&quot;
 html_rennrad         &lt;- read_html(url_rennrad)
 rennrad_tbl &lt;- html_rennrad %&gt;%
@@ -972,7 +969,7 @@ bind_cols(rennrad_tbl, rennrad_prices_tbl)</code></pre>
 ## 9            9 &quot;#\n\nX-LITE SIX\n\n&quot;                  9 &quot;#\nab 3.499,00 €\n&quot;</code></pre>
 </div>
 <div id="data-wrangling" class="section level1">
-<h1><span class="header-section-number">39</span> Data Wrangling</h1>
+<h1><span class="header-section-number">6</span> Data Wrangling</h1>
 <pre class="r"><code>library(vroom)
 library(tidyverse)
 library(data.table)
@@ -1077,9 +1074,9 @@ uspc_tbl &lt;- vroom(
   na         = c(&quot;&quot;, &quot;NA&quot;, &quot;NULL&quot;)
 )</code></pre>
 <div id="question-1" class="section level2">
-<h2><span class="header-section-number">39.1</span> Question 1</h2>
+<h2><span class="header-section-number">6.1</span> Question 1</h2>
 <div id="patent-dominance-what-us-company-corporation-has-the-most-patents-list-the-10-us-companies-with-the-most-assignedgranted-patents-in-2014." class="section level3">
-<h3><span class="header-section-number">39.1.1</span> Patent Dominance: What US company / corporation has the most patents? List the 10 US companies with the most assigned/granted patents in 2014.</h3>
+<h3><span class="header-section-number">6.1.1</span> Patent Dominance: What US company / corporation has the most patents? List the 10 US companies with the most assigned/granted patents in 2014.</h3>
 <pre class="r"><code>setnames(assignee_tbl, &quot;id&quot;, &quot;assignee_id&quot;)
 
 combined_data &lt;- merge(x = patent_assignee_tbl, y = assignee_tbl, 
@@ -1114,9 +1111,9 @@ combined_data_us %&gt;%
 </div>
 </div>
 <div id="question-2" class="section level2">
-<h2><span class="header-section-number">39.2</span> Question 2</h2>
+<h2><span class="header-section-number">6.2</span> Question 2</h2>
 <div id="what-us-company-had-the-most-patents-granted-in-april-2014" class="section level3">
-<h3><span class="header-section-number">39.2.1</span> What US company had the most patents granted in April 2014?</h3>
+<h3><span class="header-section-number">6.2.1</span> What US company had the most patents granted in April 2014?</h3>
 <pre class="r"><code>setnames(patent_tbl, &quot;id&quot;, &quot;patent_id&quot;)
 
 combined_data_us_date &lt;- merge(x = combined_data_us, y = patent_tbl, 
@@ -1152,7 +1149,7 @@ combined_data_us_april %&gt;%
 </div>
 </div>
 <div id="question-3" class="section level2">
-<h2><span class="header-section-number">39.3</span> Question 3</h2>
+<h2><span class="header-section-number">6.3</span> Question 3</h2>
 <pre class="r"><code>combined_data_3 &lt;- merge(x = patent_assignee_tbl, y = assignee_tbl, 
                                by    = &quot;assignee_id&quot;, 
                                all.x = TRUE, 
@@ -1163,7 +1160,7 @@ combined_data_3_uspc &lt;- merge(x = uspc_tbl, y = combined_data_3,
                          all.x = TRUE, 
                          all.y = FALSE)</code></pre>
 <div id="top-5-uspto-main-classes" class="section level3">
-<h3><span class="header-section-number">39.3.1</span> Top 5 USPTO main classes</h3>
+<h3><span class="header-section-number">6.3.1</span> Top 5 USPTO main classes</h3>
 <pre class="r"><code>combined_data_3_uspc %&gt;%
   group_by(mainclass_id) %&gt;%
   summarise(
@@ -1182,7 +1179,7 @@ combined_data_3_uspc &lt;- merge(x = uspc_tbl, y = combined_data_3,
 ## 5          709 18754</code></pre>
 </div>
 <div id="top-10-companies-worldwide-with-most-patents" class="section level3">
-<h3><span class="header-section-number">39.3.2</span> Top 10 companies worldwide with most patents</h3>
+<h3><span class="header-section-number">6.3.2</span> Top 10 companies worldwide with most patents</h3>
 <pre class="r"><code>combined_data_3 %&gt;%
   group_by(organization) %&gt;%
   summarise(
@@ -1204,6 +1201,83 @@ combined_data_3_uspc &lt;- merge(x = uspc_tbl, y = combined_data_3,
 ##  8 QUALCOMM Incorporated                        2597
 ##  9 LG Electronics Inc.                          2459
 ## 10 &lt;NA&gt;                                         2377</code></pre>
+</div>
+</div>
+</div>
+<div id="data-visualization" class="section level1">
+<h1><span class="header-section-number">7</span> Data visualization</h1>
+<pre class="r"><code>covid_data_tbl &lt;- read_csv(&quot;https://opendata.ecdc.europa.eu/covid19/casedistribution/csv&quot;)</code></pre>
+<div id="challenge-1" class="section level2">
+<h2><span class="header-section-number">7.1</span> Challenge 1</h2>
+<pre class="r"><code>covid_data_tbl %&gt;% 
+   distinct(cases, dateRep, countriesAndTerritories) %&gt;% 
+   filter(countriesAndTerritories == &#39;Germany&#39; | 
+            countriesAndTerritories == &#39;United_Kingdom&#39; | 
+            countriesAndTerritories == &#39;Spain&#39; | 
+            countriesAndTerritories == &#39;France&#39; | 
+            countriesAndTerritories == &#39;United_States_of_America&#39;) %&gt;%
+   mutate(date       = lubridate::dmy(dateRep)) %&gt;%
+   arrange(date) %&gt;% 
+   group_by(countriesAndTerritories) %&gt;% 
+   mutate(cumsum = cumsum(cases)) %&gt;% 
+   ggplot() +
+   geom_line(aes(x     = date,
+                 y     = cumsum,
+                 color = countriesAndTerritories))</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
+<div id="challenge-2" class="section level2">
+<h2><span class="header-section-number">7.2</span> Challenge 2</h2>
+<pre class="r"><code>world &lt;- map_data(&quot;world&quot;)</code></pre>
+<pre class="r"><code>covid_data_tbl %&gt;% 
+  distinct(cases, dateRep, countriesAndTerritories, popData2019) %&gt;% 
+  filter(countriesAndTerritories == &#39;Germany&#39; | 
+           countriesAndTerritories == &#39;United_Kingdom&#39; | 
+           countriesAndTerritories == &#39;Spain&#39; | 
+           countriesAndTerritories == &#39;France&#39; | 
+           countriesAndTerritories == &#39;United_States_of_America&#39;)</code></pre>
+<pre><code>## # A tibble: 1,699 x 4
+##    dateRep    cases countriesAndTerritories popData2019
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                         &lt;dbl&gt;
+##  1 04/12/2020 12696 France                     67012883
+##  2 03/12/2020 14064 France                     67012883
+##  3 02/12/2020  8083 France                     67012883
+##  4 01/12/2020  4005 France                     67012883
+##  5 30/11/2020  9784 France                     67012883
+##  6 29/11/2020 12500 France                     67012883
+##  7 28/11/2020 12539 France                     67012883
+##  8 27/11/2020 13563 France                     67012883
+##  9 26/11/2020 16282 France                     67012883
+## 10 25/11/2020  9155 France                     67012883
+## # … with 1,689 more rows</code></pre>
+<pre class="r"><code>covid_data_tbl_rates &lt;- covid_data_tbl %&gt;%
+  mutate(across(countriesAndTerritories, str_replace_all, &quot;_&quot;, &quot; &quot;)) %&gt;%
+  mutate(countriesAndTerritories = case_when(
+    countriesAndTerritories == &quot;United Kingdom&quot; ~ &quot;UK&quot;,
+    countriesAndTerritories == &quot;United States of America&quot; ~ &quot;USA&quot;,
+    countriesAndTerritories == &quot;Czechia&quot; ~ &quot;Czech Republic&quot;,
+    TRUE ~ countriesAndTerritories
+  )) %&gt;%
+  group_by(countriesAndTerritories) %&gt;% 
+  summarise(total_deaths = sum(deaths), pop = mean(popData2019)) %&gt;% 
+  ungroup() %&gt;%
+  rename(region = countriesAndTerritories)</code></pre>
+<pre class="r"><code>combined_data_1 &lt;- merge(x = world, y = covid_data_tbl_rates, 
+                         by    = &quot;region&quot;,
+                         all.x = TRUE, 
+                         all.y = FALSE)</code></pre>
+<pre class="r"><code>plot_data_1 &lt;- combined_data_1 %&gt;% 
+  distinct(pop, region, long, lat, total_deaths) %&gt;%
+  group_by(region) %&gt;%
+  mutate(pct = (total_deaths / pop)*100) %&gt;%
+  ungroup()</code></pre>
+<div id="visualization-of-the-distribution-of-the-mortality-rate-worldwide." class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Visualization of the distribution of the mortality rate worldwide.</h3>
+<pre class="r"><code>plot_data_1 %&gt;%  ggplot() +
+  geom_map (aes(map_id = region, fill = pct), map = world, color = &quot;white&quot;) + 
+  expand_limits(x = world$long,  y = world$lat) +
+  scale_fill_viridis_c(option = &quot;D&quot;)</code></pre>
+<p><img src="journal_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 </div>
 </div>
 </div>

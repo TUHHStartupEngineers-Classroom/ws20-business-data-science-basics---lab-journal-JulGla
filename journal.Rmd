@@ -18,10 +18,9 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 
 Last compiled: `r Sys.Date()`
 
-# Data Science at TUHH ------------------------------------------------------
-# SALES ANALYSIS ----
+# Business Data Science Basics TUHH
 
-## 1.0 Load libraries ----
+## Load libraries
 ```{r}
 library(tidyverse)
 library(readxl)
@@ -35,24 +34,22 @@ library(stringi)   # character string/text processing
 library(httr)
 library(glue)
 library(jsonlite)
+library(vroom)
+library(tictoc)
 ```
 
-## 2.0 Importing Files ----
 ```{r}
 bikes_tbl      <- read_excel(path = "00_data/01_bike_sales/01_raw_data/bikes.xlsx")
 orderlines_tbl <- read_excel("00_data/01_bike_sales/01_raw_data/orderlines.xlsx")
 bikeshops_tbl  <- read_excel("00_data/01_bike_sales/01_raw_data/bikeshops.xlsx")
 ```
 
-## 4.0 Joining Data ----
 ```{r}
 bike_orderlines_joined_tbl <- orderlines_tbl %>%
   left_join(bikes_tbl, by = c("product.id" = "bike.id")) %>%
   left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
 ```
 
-
-## 5.0 Wrangling Data ----
 ```{r}
 bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
   separate(col    = category,
@@ -69,11 +66,6 @@ bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
   set_names(names(.) %>% str_replace_all("\\.", "_"))
 ```
 
-
-## 6.0 Business Insights ----
-### 6.1 Sales by Year ----
-
-### Step 1 - Manipulate
 ```{r}
 sales_by_year_tbl <- bike_orderlines_wrangled_tbl %>%
   select(order_date, total_price) %>%
@@ -86,8 +78,6 @@ sales_by_year_tbl <- bike_orderlines_wrangled_tbl %>%
                                      suffix = " €"))
 ```
 
-
-### Step 2 - Visualize
 ```{r}
 sales_by_year_tbl %>%
   ggplot(aes(x = year, y = sales)) +
@@ -106,10 +96,6 @@ sales_by_year_tbl %>%
   )
 ```
 
-
-## 6.2 Sales by Year and Category 2 ----
-
-### Step 1 - Manipulate
 ```{r}
 sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
   select(order_date, total_price, category_1) %>%
@@ -123,8 +109,6 @@ sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
                                      suffix = " €"))
 ```
 
-
-### Step 2 - Visualize
 ```{r}
 sales_by_year_cat_1_tbl %>%
   ggplot(aes(x = year, y = sales, fill = category_1)) +
@@ -141,29 +125,24 @@ sales_by_year_cat_1_tbl %>%
   )
 ```
 
-
-## 7.0 Writing Files ----
-
-### 7.1 Excel ----
 ```{r}
 bike_orderlines_wrangled_tbl %>%
   write_xlsx("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx")
 ```
 
-### 7.2 CSV ----
 ```{r}
 bike_orderlines_wrangled_tbl %>% 
   write_csv("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.csv")
 ```
 
-### 7.3 RDS ----
 ```{r}
 bike_orderlines_wrangled_tbl %>% 
   write_rds("00_data/01_bike_sales/02_wrangled_data/bike_orderlines.rds")
 ```
 
-# Challenge ----
-## Step 1 - Manipulate
+# Intro to the tidyverse
+## Challenge 1
+
 ```{r}
 bike_state_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
   separate(col    = category,
@@ -198,7 +177,7 @@ sales_by_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
 sales_by_state_tbl
 ```
 
-## Step 2 - Visualize
+### Visualization
 ```{r}
 sales_by_state_tbl %>%
   ggplot(aes(x = state, y = sales)) +
@@ -218,8 +197,8 @@ sales_by_state_tbl %>%
   )
 ```
 
-## Analyze the sales by location and year ----
-### Step 1 - Manipulate
+## Challenge 2
+
 ```{r}
 sales_by_year_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
   select(order_date, total_price, state) %>%
@@ -233,9 +212,9 @@ sales_by_year_state_tbl <- bike_state_orderlines_wrangled_tbl %>%
                                      suffix = " €"))
 ```
 
-### Step 2 - Visualize
+###Visualization
 
-#### Baden-Württemberg
+### Baden-Württemberg
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Baden-Württemberg", y = sales, fill = year)) +
@@ -253,7 +232,7 @@ sales_by_year_state_tbl %>%
 ```
 
 
-#### Bavaria
+### Bavaria
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Bavaria", y = sales, fill = year)) +
@@ -270,7 +249,7 @@ sales_by_year_state_tbl %>%
   )
 ```
 
-#### Berlin
+### Berlin
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Berlin", y = sales, fill = year)) +
@@ -287,7 +266,7 @@ sales_by_year_state_tbl %>%
   )
 ```
 
-#### Bremen
+### Bremen
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Bremen", y = sales, fill = year)) +
@@ -304,7 +283,7 @@ sales_by_year_state_tbl %>%
   )
 ```
 
-#### Hamburg
+### Hamburg
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Hamburg", y = sales, fill = year)) +
@@ -322,7 +301,7 @@ sales_by_year_state_tbl %>%
 
 ```
 
-#### Hesse 
+### Hesse 
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Hesse", y = sales, fill = year)) +
@@ -340,7 +319,7 @@ sales_by_year_state_tbl %>%
 ```
 
 
-#### Lower Saxony
+### Lower Saxony
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Lower Saxony", y = sales, fill = year)) +
@@ -358,7 +337,7 @@ sales_by_year_state_tbl %>%
 ```
 
 
-#### Mecklenburg-Western Pomerania 
+### Mecklenburg-Western Pomerania 
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Mecklenburg-Western Pomerania", y = sales, fill = year)) +
@@ -376,7 +355,7 @@ sales_by_year_state_tbl %>%
 ```
 
 
-#### North Rhine-Westphalia 
+### North Rhine-Westphalia 
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "North Rhine-Westphalia", y = sales, fill = year)) +
@@ -394,7 +373,7 @@ sales_by_year_state_tbl %>%
 ```
 
 
-#### Saxony 
+### Saxony 
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Saxony", y = sales, fill = year)) +
@@ -411,7 +390,7 @@ sales_by_year_state_tbl %>%
   )
 ```
 
-#### Saxony-Anhalt
+### Saxony-Anhalt
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Saxony-Anhalt", y = sales, fill = year)) +
@@ -428,7 +407,7 @@ sales_by_year_state_tbl %>%
   )
 ```
 
-#### Schleswig-Holstein
+### Schleswig-Holstein
 ```{r}
 sales_by_year_state_tbl %>%
   ggplot(aes(x = "Schleswig-Holstein", y = sales, fill = year)) +
@@ -446,7 +425,9 @@ sales_by_year_state_tbl %>%
 ```
 
 
-# Weather Data for Hamburg
+# Data Acquisition
+## Weather Data for Hamburg
+
 ```{r}
 hamburg_weather <- GET("http://api.openweathermap.org/data/2.5/weather?q=Hamburg,DE&APPID=fc851c17b49d940f2315af23e7efb62d")
 hamburg_weather
@@ -458,7 +439,7 @@ hamburg_weather %>%
 ```
 
 
-# Road bikes from Rose with prices
+## Scraping Rose website - Road bikes with prices
 ```{r}
 url_rennrad          <- "https://www.rosebikes.de/fahrräder/rennrad"
 html_rennrad         <- read_html(url_rennrad)
@@ -482,12 +463,6 @@ bind_cols(rennrad_tbl, rennrad_prices_tbl)
 
 # Data Wrangling
 ```{r}
-library(vroom)
-library(tidyverse)
-library(data.table)
-library(dplyr)
-library(tictoc)
-
 col_types <- list(
   id = col_character(),
   type = col_character(),
@@ -636,7 +611,6 @@ combined_data_us_april %>%
 
 ```
 
-
 ## Question 3
 ```{r}
 combined_data_3 <- merge(x = patent_assignee_tbl, y = assignee_tbl, 
@@ -674,7 +648,6 @@ combined_data_3 %>%
   arrange(desc(count)) %>% 
   head(10)
 ```
-
 
 # Data visualization
 ```{r}
@@ -746,7 +719,7 @@ plot_data_1 <- combined_data_1 %>%
   ungroup()
 ```
 
-### Visualization of the distribution of the mortality rate worldwide.
+### Visualization of the distribution of the mortality rate worldwide
 
 ```{r}
 plot_data_1 %>%  ggplot() +

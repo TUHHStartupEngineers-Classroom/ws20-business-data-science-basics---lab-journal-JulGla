@@ -1,0 +1,512 @@
+number = col_character(),
+country = col_character(),
+date = col_date("%Y-%m-%d"),
+abstract = col_character(),
+title = col_character(),
+kind = col_character(),
+num_claims = col_double(),
+filename = col_character(),
+withdrawn = col_double()
+)
+patent_assignee_tbl <- vroom(
+file       = "patent_assignee.tsv",
+delim      = "\t",
+col_types  = col_types,
+na         = c("", "NA", "NULL")
+)
+class(patent_assignee_tbl)
+setDT(patent_assignee_tbl)
+class(patent_assignee_tbl)
+patent_assignee_tbl %>% glimpse()
+assignee_tbl %>%
+rename(id = patent_id)
+assignee_tbl %>%
+rename(
+id = patent_id)
+assignee_tbl %>%
+rename(
+"id" = "patent_id")
+rlang::last_error()
+assignee_tbl %>%
+rename(
+"id" = "assignee_id")
+assignee_tbl %>%
+rename(
+id = assignee_id)
+library(dplyr)
+assignee_tbl %>%
+rename(
+id = assignee_id)
+assignee_tbl %>%
+rename(assignee_id = id)
+View(assignee_tbl)
+# Merge data
+tic()
+combined_data <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+View(assignee_tbl)
+View(patent_assignee_tbl)
+View(patent_tbl)
+assignee_tbl %>%
+rename(assignee_id = id)
+assignee_tbl[,.(assignee_id = id)]
+setnames(assignee_tbl, "id", "assignee_id")
+View(assignee_tbl)
+# Merge data
+tic()
+combined_data <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+library(tictoc)
+# Merge data
+tic()
+combined_data <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+combined_data %>% glimpse()
+View(combined_data)
+combined_data$assignee_id %>% unique()
+combined_data %>%
+filter(type == "2")
+combined_data$assignee_id %>%
+unique() %>%
+filter(type == "2")
+combined_data_us <- combined_data %>%
+filter(type == "2")
+View(combined_data)
+View(combined_data_us)
+View(combined_data)
+combined_data_us$assignee_id %>%
+unique()
+# Count
+combined_data_us %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+View(patent_tbl)
+# Merge data with date
+tic()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+# Rename column
+setnames(patent_tbl, "id", "assignee_id")
+# Merge data with date
+tic()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "id",
+all.x = TRUE,
+all.y = FALSE)
+View(patent_tbl)
+View(combined_data_us)
+# Rename column
+setnames(patent_tbl, "id", "assignee_id")
+View(patent_tbl)
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "id",
+all.x = TRUE,
+all.y = FALSE)
+# Rename column
+setnames(patent_tbl, "assignee_id", "patent_id")
+View(patent_tbl)
+# Merge data with date
+tic()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "id",
+all.x = TRUE,
+all.y = FALSE)
+# Merge data with date
+tic()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+View(combined_data_us_date)
+# Only April 2014
+combined_data_us_april <- combined_data_us_date %>%
+filter(date() >= as.Date("2014-04-01") & date() <= as.Date("2014-04-31"))
+# Only April 2014
+combined_data_us_april <- combined_data_us_date %>%
+# Only April 2014
+combined_data_us_april <- combined_data_us_date %>%
+filter(filter(between(date, as.Date("2014-04-01"), as.Date("2014-04-01"))))
+# Only April 2014
+combined_data_us_date$date <- as.Date(temp$date, format= "%Y-%m-%d")
+# Only April 2014
+combined_data_us_date$date <- as.Date(combined_data_us_date$date, format= "%Y-%m-%d")
+combined_data_us_april <- combined_data_us_date %>%
+filter(filter(between(date, as.Date("2014-04-01"), as.Date("2014-04-01"))))
+subset(combined_data_us_date, date> "2014-04-01" & date < "2014-04-30")
+subset(combined_data_us_date, date> "2014-04-01" & date < "2014-04-31")
+subset(combined_data_us_date, date> "2014-04-01" & date < "2014-04-30")
+combined_data_us_april <- combined_data_us_date %>%
+filter(filter(between(date, as.Date("2014-04-01"), as.Date("2014-04-30"))))
+combined_data_us_april <- subset(combined_data_us_date, date> "2014-04-01" & date < "2014-04-30")
+View(combined_data_us_april)
+# Count
+combined_data_us_april %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+View(assignee_tbl)
+col_types <- list(
+id = col_character(),
+type = col_character(),
+number = col_character(),
+country = col_character(),
+date = col_date("%Y-%m-%d"),
+abstract = col_character(),
+title = col_character(),
+kind = col_character(),
+num_claims = col_double(),
+filename = col_character(),
+withdrawn = col_double()
+)
+uspc_tbl <- vroom(
+file       = "uspc.tsv",
+delim      = "\t",
+col_types  = col_types,
+na         = c("", "NA", "NULL")
+)
+View(uspc_tbl)
+# Rename column
+setnames(assignee_tbl, "id", "assignee_id")
+source('~/Dokumente/Umweltingenieurwesen/3. Semester/NTA/Business_Data_Science_Basics/02_data_wrangling/patent/patent/patent.R', echo=TRUE)
+combined_data %>% glimpse()
+# Count
+combined_data_us %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Count
+combined_data_us_april %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+library(vroom)
+library(tidyverse)
+library(data.table)
+library(dplyr)
+library(tictoc)
+col_types <- list(
+id = col_character(),
+type = col_character(),
+number = col_character(),
+country = col_character(),
+date = col_date("%Y-%m-%d"),
+abstract = col_character(),
+title = col_character(),
+kind = col_character(),
+num_claims = col_double(),
+filename = col_character(),
+withdrawn = col_double()
+)
+patent_tbl <- vroom(
+file       = "patent.tsv",
+delim      = "\t",
+col_types  = col_types,
+na         = c("", "NA", "NULL")
+)
+class(patent_tbl)
+setDT(patent_tbl)
+class(patent_tbl)
+patent_tbl %>% glimpse()
+col_types <- list(
+id = col_character(),
+type = col_character(),
+number = col_character(),
+country = col_character(),
+date = col_date("%Y-%m-%d"),
+abstract = col_character(),
+title = col_character(),
+kind = col_character(),
+num_claims = col_double(),
+filename = col_character(),
+withdrawn = col_double()
+)
+assignee_tbl <- vroom(
+file       = "assignee.tsv",
+delim      = "\t",
+col_types  = col_types,
+na         = c("", "NA", "NULL")
+)
+class(assignee_tbl)
+setDT(assignee_tbl)
+class(assignee_tbl)
+assignee_tbl %>% glimpse()
+col_types <- list(
+id = col_character(),
+type = col_character(),
+number = col_character(),
+country = col_character(),
+date = col_date("%Y-%m-%d"),
+abstract = col_character(),
+title = col_character(),
+kind = col_character(),
+num_claims = col_double(),
+filename = col_character(),
+withdrawn = col_double()
+)
+patent_assignee_tbl <- vroom(
+file       = "patent_assignee.tsv",
+delim      = "\t",
+col_types  = col_types,
+na         = c("", "NA", "NULL")
+)
+class(patent_assignee_tbl)
+setDT(patent_assignee_tbl)
+class(patent_assignee_tbl)
+patent_assignee_tbl %>% glimpse()
+col_types <- list(
+id = col_character(),
+type = col_character(),
+number = col_character(),
+country = col_character(),
+date = col_date("%Y-%m-%d"),
+abstract = col_character(),
+title = col_character(),
+kind = col_character(),
+num_claims = col_double(),
+filename = col_character(),
+withdrawn = col_double()
+)
+uspc_tbl <- vroom(
+file       = "uspc.tsv",
+delim      = "\t",
+col_types  = col_types,
+na         = c("", "NA", "NULL")
+)
+# Rename column
+setnames(assignee_tbl, "id", "assignee_id")
+# Merge data
+tic()
+combined_data <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+combined_data %>% glimpse()
+# Only US companies -> Type 2
+combined_data_us <- combined_data %>%
+filter(type == "2")
+combined_data_us$assignee_id %>%
+unique()
+# Count
+combined_data_us %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Rename column
+setnames(patent_tbl, "assignee_id", "patent_id")
+# Merge data with date
+tic()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+combined_data_us_date %>% glimpse()
+View(patent_tbl)
+# Rename column
+setnames(patent_tbl, "id", "patent_id")
+# Merge data with date
+tic()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+combined_data_us_date %>% glimpse()
+# Only April 2014
+combined_data_us_date$date <- as.Date(combined_data_us_date$date, format= "%Y-%m-%d")
+combined_data_us_april <- subset(combined_data_us_date, date> "2014-04-01" & date < "2014-04-30")
+# Count
+combined_data_us_april %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Question 3
+View(uspc_tbl)
+View(assignee_tbl)
+View(patent_assignee_tbl)
+# Merge patent_assignee and assignee data by assignee_id
+tic()
+combined_data_us_date <- merge(x = patent_assignee_us, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+# Merge patent_assignee and assignee data by assignee_id
+tic()
+combined_data_us_date <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+combined_data_us_date <- merge(x = combined_data_us, y = patent_tbl,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+combined_data_3 <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+combined_data_3 %>% glimpse()
+View(combined_data_3)
+tic()
+combined_data_3_uspc <- merge(x = combined_data_3, y = uspc_tbl,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+toc()
+View(combined_data_3)
+# Merge with uspc_tbl
+combined_data_3_uspc <- merge(x = combined_data_3, y = uspc_tbl,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+combined_data_3 <- merge(x = patent_assignee_tbl, y = assignee_tbl,
+by    = "assignee_id",
+all.x = TRUE,
+all.y = FALSE)
+combined_data_3 %>% glimpse()
+# Merge with uspc_tbl
+combined_data_3_uspc <- merge(x = uspc_tbl, y = combined_data_3,
+by    = "patent_id",
+all.x = TRUE,
+all.y = FALSE)
+View(combined_data_3_uspc)
+# Count
+combined_data_3_uspc %>%
+group_by(mainclass_id) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Top 10 main classes
+combined_data_3_uspc %>%
+group_by(mainclass_id) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Top 10 main classes
+combined_data_3_uspc_top <- combined_data_3_uspc %>%
+group_by(mainclass_id) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+View(combined_data_3_uspc_top)
+combined_data_3_uspc_top(1:5)
+combined_data_3_uspc_top[1:5]
+head(combined_data_3_uspc_top, 5)
+# Top 5 main classes
+combined_data_3_uspc_top <- combined_data_3_uspc %>%
+group_by(mainclass_id) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+combined_data_3_uspc %>%
+group_by(mainclass_id) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count)) %>%
+head(5)
+# Top 5 main classes
+combined_data_3_uspc %>%
+group_by(mainclass_id) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count)) %>%
+head(5)
+# Count
+combined_data_us_april %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Count
+combined_data_us_april %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count)) %>%
+head(10)
+# Count
+combined_data_us %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count))
+# Count
+combined_data_us %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count)) %>%
+head(10)
+View(combined_data_3)
+# Top 10 companies worldwide with most patents
+# Count
+combined_data_3 %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count)) %>%
+head(10)
+# Count
+combined_data_us %>%
+group_by(organization) %>%
+summarise(
+count = n(),
+) %>%
+ungroup() %>%
+arrange(desc(count)) %>%
+head(10)

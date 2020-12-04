@@ -1220,8 +1220,8 @@ combined_data_3_uspc &lt;- merge(x = uspc_tbl, y = combined_data_3,
   group_by(region) %&gt;%
   mutate(pct = (total_deaths / pop)*100) %&gt;%
   ungroup()</code></pre>
-<div id="visualization-of-the-distribution-of-the-mortality-rate-worldwide." class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Visualization of the distribution of the mortality rate worldwide.</h3>
+<div id="visualization-of-the-distribution-of-the-mortality-rate-worldwide" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Visualization of the distribution of the mortality rate worldwide</h3>
 <pre class="r"><code>plot_data_1 %&gt;%  ggplot() +
   geom_map (aes(map_id = region, fill = pct), map = world, color = &quot;white&quot;) + 
   expand_limits(x = world$long,  y = world$lat) +
